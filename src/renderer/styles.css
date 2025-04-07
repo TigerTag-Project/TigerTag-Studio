@@ -1,0 +1,63 @@
+/* styles.css */
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* CSS Variables */
+:root {
+  --primary-color: #000000;
+  --secondary-color: #50e3c2;
+  --background-color: #904848;
+  --text-color: #333;
+  --button-bg: var(--primary-color);
+  --button-text: #fff;
+  --border-radius: 8px;
+  --font-family: 'Roboto', sans-serif;
+}
+
+/* 1) Fond global en noir (optionnel, si vous voulez TOUT en noir) */
+
+/* Home screen */
+.home-screen {
+  background-color: #000;
+  color: #fff;
+  min-height: 10h; /* ou calc(100vh - la hauteur du menu) */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Buttons */
+.main-btn, button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin: 0.5rem;
+}
+
+.main-btn:hover, button:hover {
+  background-color: var(--secondary-color);
+  transform: scale(1.05);
+}
+
+
+
+
+/* Responsive */
+@media (max-width: 600px) {
+  button {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+}

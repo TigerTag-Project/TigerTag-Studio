@@ -1,0 +1,50 @@
+<!-- make.html -->
+<div id="loading">⏳ Loading TigerTag data...</div>
+<div id="mainContentForm" style="display: none;">
+  <h1>Make TigerTag</h1>
+  <form id="tagForm" autocomplete="off">
+    <fieldset class="basic-info">
+      <legend>Create TigerTag</legend>
+      <div class="color-selection">
+        <label for="color" class="sr-only">Color</label>
+        <input type="color" id="color" value="#FF0000" aria-label="Choose a color" />
+      </div>
+      <div class="field-group">
+        <label for="transparent" class="toggle-label">
+          <span class="toggle-text">Transparent:</span>
+          <input type="checkbox" id="transparent" class="toggle" />
+        </label>
+      </div>
+      <div class="field-group"><label for="brandId">Brand:</label><select id="brandId"></select></div>
+      <div class="field-group"><label for="materialId">Material:</label><select id="materialId"></select></div>
+      <div class="field-group"><label for="aspect1Id">Aspect:</label><select id="aspect1Id"></select></div>
+    </fieldset>
+
+    <details class="advanced-options">
+      <summary>Advanced options</summary>
+      <fieldset>
+        <legend>General information</legend>
+        <div class="field-group"><label for="versionId">Version:</label><select id="versionId"></select></div>
+        <div class="field-group"><label for="aspect2Id">Aspect Secondary:</label><select id="aspect2Id"></select></div>
+        <div class="field-group"><label for="typeId">Type:</label><select id="typeId"></select></div>
+        <div class="field-group"><label for="diameterId">Diameter:</label><select id="diameterId"></select></div>
+        <div class="field-group"><label for="unitId">Unit:</label><select id="unitId"><option value="21">g</option></select></div>
+        <div class="field-group"><label for="weight">Weight (g):</label><input type="number" id="weight" value="1000" /></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Temperatures</legend>
+        <div class="field-group"><label for="tempMin">Temp Min (°C):</label><input type="number" id="tempMin" /></div>
+        <div class="field-group"><label for="tempMax">Temp Max (°C):</label><input type="number" id="tempMax" /></div>
+        <div class="field-group"><label for="dryTemp">Dry Temp (°C):</label><input type="number" id="dryTemp" /></div>
+        <div class="field-group"><label for="dryTime">Dry Time (h):</label><input type="number" id="dryTime" /></div>
+      </fieldset>
+    </details>
+
+    <div class="button-group">
+      <button type="submit">🚀 Write Tag</button>
+      <button type="button" id="resetTagBtn">🔄 Reset Tag</button>
+    </div>
+  </form>
+  <div id="status" style="margin-top: 10px;"></div>
+</div>

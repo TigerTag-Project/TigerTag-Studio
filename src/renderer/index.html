@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TigerTag Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+    /* Conteneur du menu */
+    #menu-container {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #f5f5f5;
+      border-bottom: 1px solid #ccc;
+    }
+    /* Conteneur des vues */
+    #view-container {
+      padding: 20px;
+    }
+    /* Chaque vue est cachée par défaut */
+    .view {
+      display: none;
+    }
+    /* La vue active est affichée */
+    .active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="menu-container"></div>
+  <div id="view-container">
+    <div id="homeView" class="view active"></div>
+    <div id="makeView" class="view"></div>
+    <div id="settingsView" class="view"></div>
+  </div>
+
+  <script>
+    // Charger le menu
+    fetch('menu.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+        attachMenuListeners();
+      });
+
+    // Précharger uniquement les vues Home et Settings
+    Promise.all([
+      fetch('home.html').then(res => res.text()),
+      fetch('settings.html').then(res => res.text())
+    ]).then(([homeHTML, settingsHTML]) => {
+      document.getElementById('homeView').innerHTML = homeHTML;
+      document.getElementById('settingsView').innerHTML = settingsHTML;
+    });
+
+    // Fonction pour afficher la vue souhaitée
+    function loadView(view) {
+      // Masquer toutes les vues
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+
+      if(view === "make"){
+        // Charger make.html seulement si ce n'est pas déjà fait
+        const makeView = document.getElementById('makeView');
+        if (!makeView.innerHTML.trim()) {
+          fetch('make.html')
+            .then(res => res.text())
+            .then(html => {
+              makeView.innerHTML = html;
+              makeView.classList.add('active');
+              // Charger le script make.js et initialiser le formulaire
+              loadMakeScript();
+            })
+            .catch(err => console.error("Erreur lors du chargement de make.html :", err));
+        } else {
+          makeView.classList.add('active');
+          // Si le script est déjà chargé, on peut simplement réinitialiser le formulaire
+          if(typeof initMakePage === 'function'){
+            initMakePage();
+          }
+        }
+      } else {
+         // Pour Home et Settings, afficher directement la vue déjà préchargée
+         document.getElementById(view + 'View').classList.add('active');
+      }
+    }
+
+    // Fonction pour charger le script make.js (si non déjà chargé)
+    function loadMakeScript(){
+      if (!document.getElementById('makeScript')) {
+        const script = document.createElement('script');
+        script.src = 'make.js';
+        script.id = 'makeScript';
+        script.defer = true;
+        script.onload = function(){
+          if(typeof initMakePage === 'function'){
+            initMakePage();
+          }
+        };
+        document.body.appendChild(script);
+      } else {
+        if(typeof initMakePage === 'function'){
+          initMakePage();
+        }
+      }
+    }
+
+    // Attacher les écouteurs du menu
+    function attachMenuListeners() {
+      document.getElementById('homeBtn')?.addEventListener('click', () => loadView('home'));
+      document.getElementById('makeBtn')?.addEventListener('click', () => loadView('make'));
+      document.getElementById('settingsBtn')?.addEventListener('click', () => loadView('settings'));
+      document.getElementById('updateDBBtn')?.addEventListener('click', async () => {
+        const result = await window.electronAPI.updateDB();
+        alert(result.success ? 'Database updated successfully!' : `Error: ${result.error}`);
+      });
+      document.getElementById('scanBtn')?.addEventListener('click', async () => {
+        const result = await window.electronAPI.scanCard();
+        alert(JSON.stringify(result, null, 2));
+      });
+    }
+  </script>
+</body>
+</html>

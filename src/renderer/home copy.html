@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TigerTag Home</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="menu-container"></div>
+
+<script>
+  fetch('menu.html')
+    .then(response => response.text())
+    .then(html => {
+      document.getElementById('menu-container').innerHTML = html;
+    });
+
+  function goTo(page) {
+    window.location.href = page;
+  }
+</script>
+  <div class="home-screen">
+    <img src="asset/TigerTag_Logo_1024x1024.png" alt="TigerTag Logo">
+    <div>
+      <button class="main-btn" id="scanBtn"><i class="fas fa-qrcode"></i> Scan</button>
+      <button class="main-btn" id="makeBtn"><i class="fas fa-cogs"></i> Make</button>
+      <button class="main-btn" id="updateDBBtn"><i class="fas fa-sync-alt"></i> Update DB</button>
+    </div>
+  </div>
+  <script>
+    document.getElementById('scanBtn').addEventListener('click', async () => {
+      console.log('Scan button clicked');
+      const result = await window.electronAPI.scanCard();
+      console.log('Scan result:', result);
+      alert(JSON.stringify(result, null, 2));
+    });
+
+    document.getElementById('makeBtn').addEventListener('click', () => {
+      console.log('Make button clicked');
+      window.location.href = 'make.html';
+    });
+
+    document.getElementById('updateDBBtn').addEventListener('click', async () => {
+      console.log('Update DB button clicked');
+      const result = await window.electronAPI.updateDB();
+      console.log('Update DB result:', result);
+      alert(result.success ? 'Database updated successfully!' : `Error: ${result.error}`);
+    });
+  </script>
+</body>
+</html>

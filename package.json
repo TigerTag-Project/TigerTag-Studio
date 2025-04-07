@@ -1,0 +1,29 @@
+{
+    "name": "tigertag-studio-light",
+    "version": "1.0.0",
+    "description": "A modular Node.js project for TigerTag Maker and Pro protocols with stubs for future protocols.",
+    "main": "src/main.js",
+    "scripts": {
+      "start": "electron .",
+      "test": "jest"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/TigerTag-Project/tigertag-studio-light.git"
+    },
+    "author": "TigerTag",
+    "license": "MIT",
+    "dependencies": {
+      "axios": "^1.8.4",
+      "electron": "^25.0.0",
+      "nfc-pcsc": "^0.8.1",
+      "winston": "^3.8.2"
+    },
+    "devDependencies": {
+      "electron-rebuild": "^3.2.9",
+      "jest": "^29.2.1"
+    },
+    "engines": {
+      "node": ">=16.0.0"
+    }
+  }

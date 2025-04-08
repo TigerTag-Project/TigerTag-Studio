@@ -41,17 +41,52 @@ app.on('window-all-closed', () => {
 });
 
 // IPC handler for "Scan" operation
-ipcMain.handle('scan-card', async () => {
-  logger.info('Scan button pressed, initiating card scan...');
-  try {
-    const reader = require('./protocols/tigertag/reader');
-    const pages = await reader.read();
-    logger.info('Card read successfully:', pages);
-    return { success: true, pages };
-  } catch (error) {
-    logger.error('Error scanning card:', error);
-    return { success: false, error: error.message };
-  }
+const { readTag } = require('./protocols/tigertag/reader');
+
+ipcMain.handle('readTag', async () => {
+  return new Promise((resolve, reject) => {
+    readTag((err, tagData) => {
+      if (err) {
+        return reject(err);
+      }
+      // Préparer un objet "plat" pour l'envoi au renderer (car certains types ne se transfèrent pas bien)
+      const result = {
+        tigerTagID: tagData.tigerTagID,
+        productID: Array.from(tagData.productID),
+        productIdDecimal: tagData.productIdDecimal,
+        materialID: tagData.materialID,
+        materialLabel: tagData.materialLabel,
+        aspect1ID: tagData.aspect1ID,
+        aspect2ID: tagData.aspect2ID,
+        typeID: tagData.typeID,
+        typeLabel: tagData.typeLabel,
+        diameterID: tagData.diameterID,
+        brandID: tagData.brandID,
+        brandLabel: tagData.brandLabel,
+        color: tagData.color,
+        weight: Array.from(tagData.weight),
+        unitId: tagData.unitId,
+        tempMin: tagData.tempMin,
+        tempMax: tagData.tempMax,
+        dryTemp: tagData.dryTemp,
+        dryTime: tagData.dryTime,
+        timeStamp: tagData.timeStamp,
+        metadata: Array.from(tagData.metadata),
+        ttSignature: Array.from(tagData.ttSignature),
+
+         // Champs enrichis à inclure ici dans l’objet :
+        versionLabel: tagData.versionLabel,
+        aspect1Label: tagData.aspect1Label,
+        aspect2Label: tagData.aspect2Label,
+        unitLabel: tagData.unitLabel,
+        diameterLabel: tagData.diameterLabel,
+        weightValue: tagData.weightValue,
+        timeStampReadable: tagData.timeStampReadable,
+      };
+      // Envoi de l'objet "plat" au renderer
+      resolve(result);
+    });
+  });
 });
 
 // IPC handler for "Update TigerTag DB" operation

@@ -34,6 +34,16 @@ const populateSelect = (id, options) => {
        if (id === 'typeId' && opt.id === 142) {
         option.selected = true;
       }
+
+      // Pour le select aspect1Id, pré-sélectionner l'option { id: 104, "label": 'Basic' } 
+      if (id === 'aspect1Id' && opt.id === 104) {
+        option.selected = true;
+      }
+
+      // Pour le select aspect2Id, pré-sélectionner l'option { id: 255, "label": 'none' } 
+      if (id === 'aspect2Id' && opt.id === 255) {
+        option.selected = true;
+      }
     
     select.appendChild(option);
   });
@@ -92,7 +102,7 @@ document.getElementById('mainContentForm').style.display = 'block';
         // Vérifier que le champ "materialId" a une valeur (non null)
         const materialIdValue = document.getElementById('materialId').value;
         if (!materialIdValue) {
-          alert("Veuillez sélectionner un matériau avant de pouvoir écrire le tag.");
+          alert("Please select a material before writing the tag.");
           return; // On empêche l'envoi du formulaire
         }
 
@@ -126,15 +136,19 @@ document.getElementById('mainContentForm').style.display = 'block';
         };
         console.log('[make.js] Sending formData to main:', formData);
         const result = await window.electronAPI.makeTag(formData);
-        document.getElementById('status').innerText = result.success
-          ? 'Tag written successfully!'
-          : `Error: ${result.error}`;
+
+        if (result.success) {
+          alert('✅ Tag written successfully!');
+        } else {
+          alert(`❌ Error: ${result.error}`);
+        }
+        
     });
 
     // Bouton reset
     document.getElementById('resetTagBtn').addEventListener('click', async () => {
         const zeroFormData = {
-          tigerTagID: 0,
+          tigerTagID: 1816240865, // TigerTag ID = TigerTag Init Version V1.0
           productID: 0,
           materialID: 0,
           aspect1ID: 0,
@@ -157,6 +171,8 @@ document.getElementById('mainContentForm').style.display = 'block';
         document.getElementById('status').innerText = result.success
           ? 'Tag reset to all zeros!'
           : `Reset Error: ${result.error}`;
+          alert("TigerTag Reset.");
+          
     });
 
     form.dataset.initialized = true;

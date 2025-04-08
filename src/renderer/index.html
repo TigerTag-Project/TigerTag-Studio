@@ -38,6 +38,7 @@
     <div id="homeView" class="view active"></div>
     <div id="makeView" class="view"></div>
     <div id="settingsView" class="view"></div>
+    <div id="scanView" class="view"></div>
   </div>
 
   <script>
@@ -63,7 +64,7 @@
       // Masquer toutes les vues
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
 
-      if(view === "make"){
+      if (view === "make") {
         // Charger make.html seulement si ce n'est pas déjà fait
         const makeView = document.getElementById('makeView');
         if (!makeView.innerHTML.trim()) {
@@ -78,34 +79,61 @@
             .catch(err => console.error("Erreur lors du chargement de make.html :", err));
         } else {
           makeView.classList.add('active');
-          // Si le script est déjà chargé, on peut simplement réinitialiser le formulaire
-          if(typeof initMakePage === 'function'){
+          if (typeof initMakePage === 'function') {
             initMakePage();
           }
         }
+      } else if (view === "scan.html") {
+        // Charger scan.html dans le conteneur scanView
+        const scanView = document.getElementById('scanView');
+        if (!scanView.innerHTML.trim()) {
+          fetch('scan.html')
+            .then(res => res.text())
+            .then(html => {
+              scanView.innerHTML = html;
+              scanView.classList.add('active');
+              // Charger le script scan.js si nécessaire
+              loadScanScript();
+            })
+            .catch(err => console.error("Erreur lors du chargement de scan.html :", err));
+        } else {
+          scanView.classList.add('active');
+          loadScanScript();
+        }
       } else {
-         // Pour Home et Settings, afficher directement la vue déjà préchargée
-         document.getElementById(view + 'View').classList.add('active');
+        // Pour Home et Settings, afficher directement la vue déjà préchargée
+        document.getElementById(view + 'View').classList.add('active');
       }
     }
 
     // Fonction pour charger le script make.js (si non déjà chargé)
-    function loadMakeScript(){
+    function loadMakeScript() {
       if (!document.getElementById('makeScript')) {
         const script = document.createElement('script');
         script.src = 'make.js';
         script.id = 'makeScript';
         script.defer = true;
-        script.onload = function(){
-          if(typeof initMakePage === 'function'){
+        script.onload = function() {
+          if (typeof initMakePage === 'function') {
             initMakePage();
           }
         };
         document.body.appendChild(script);
       } else {
-        if(typeof initMakePage === 'function'){
+        if (typeof initMakePage === 'function') {
           initMakePage();
         }
+      }
+    }
+
+    // Fonction pour charger le script scan.js (si non déjà chargé)
+    function loadScanScript() {
+      if (!document.getElementById('scanScript')) {
+        const script = document.createElement('script');
+        script.src = 'scan.js';
+        script.id = 'scanScript';
+        script.defer = true;
+        document.body.appendChild(script);
       }
     }
 
@@ -118,10 +146,7 @@
         const result = await window.electronAPI.updateDB();
         alert(result.success ? 'Database updated successfully!' : `Error: ${result.error}`);
       });
-      document.getElementById('scanBtn')?.addEventListener('click', async () => {
-        const result = await window.electronAPI.scanCard();
-        alert(JSON.stringify(result, null, 2));
-      });
+      document.getElementById('scanBtn')?.addEventListener('click', () => loadView('scan.html'));
     }
   </script>
 </body>

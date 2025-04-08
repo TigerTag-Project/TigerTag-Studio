@@ -102,16 +102,15 @@ class TigerTagSpoolData {
       new Uint8Array(this.buffer, 20, 3).set(val);
     } else if (typeof val === 'number') {
       const bytes = [
-        (val >> 16) & 0xFF, // octet le plus significatif
+        (val >> 16) & 0xFF,
         (val >> 8) & 0xFF,
-        val & 0xFF          // octet le moins significatif
+        val & 0xFF
       ];
       new Uint8Array(this.buffer, 20, 3).set(bytes);
     } else {
       throw new Error("Weight must be a 3-byte array or a number");
     }
   }
-  
 
   get unitId() {
     return this.view.getUint8(23);
@@ -119,7 +118,6 @@ class TigerTagSpoolData {
   set unitId(val) {
     this.view.setUint8(23, val);
   }
-
 
   get tempMin() {
     return this.view.getUint16(24, false);
@@ -236,51 +234,71 @@ function buildBuffer(formData) {
   tagData.metadata = new Array(32).fill(0);
   tagData.ttSignature = new Array(64).fill(0);
 
-  // Log pour vérifier le contenu du buffer (144 octets)
   console.log("Tag data buffer:", Array.from(new Uint8Array(tagData.buffer)));
-
-  // Retourner directement le buffer complet (pas de découpage en pages)
   return Buffer.from(tagData.buffer);
 }
 
 /**
  * Fonction qui écrit le buffer sur la carte.
+ * Gère deux états :
+ *   - Attendre la présence d'une puce.
+ *   - Programmer la puce une fois détectée et arrêter le processus.
+ * De plus, si aucune puce n'est détectée après 5 secondes, le processus s'arrête.
  */
 async function writeTag(formData) {
   const { NFC } = require('nfc-pcsc');
   const nfc = new NFC();
-  
+  let programmed = false;
+  let timeoutCleared = false;
+
+  // Démarrer un timer de 5 secondes
+  const timeoutId = setTimeout(() => {
+    if (!programmed) {
+      console.log("Aucune puce détectée pendant 10 secondes. Arrêt du processus d'écriture.");
+      timeoutCleared = true;
+      // Fermer les lecteurs NFC (ceci arrête la détection, mais ne ferme pas l'application Electron)
+      nfc.close();
+      // Vous pouvez également notifier l'utilisateur via l'interface (par exemple, en affichant un message)
+    }
+  }, 10000);
+
   nfc.on('reader', reader => {
     console.log(`Reader ${reader.reader.name} detected`);
-    
+
     reader.on('card', async card => {
-      console.log(`Card detected:`, card);
-      
+      // Si déjà programmé ou en timeout, on ignore la carte
+      if (programmed || timeoutCleared) return;
+
+      console.log("Carte détectée:", card);
       try {
-        // Construire le buffer complet à partir des données du formulaire.
         const fullBuffer = buildBuffer(formData);
         console.log("APDU payload:", fullBuffer.toString('hex').toUpperCase());
-        
-        // Écriture du buffer complet sur la carte à partir du bloc 4.
         await reader.write(4, fullBuffer);
-        console.log("Data written successfully!");
+        console.log("Données écrites avec succès !");
+        programmed = true;
+        clearTimeout(timeoutId);
+        // Retirer les écouteurs pour éviter d'écrire sur d'autres cartes
+        reader.removeAllListeners('card');
+        // Fermer le lecteur sans arrêter l'application Electron
+        nfc.close();
       } catch (err) {
-        console.error("Error when writing data:", err);
-        process.exit(1);
+        console.error("Erreur lors de l'écriture :", err);
+        clearTimeout(timeoutId);
+        // Vous pouvez notifier l'utilisateur de l'erreur ici sans fermer l'application
       }
     });
-    
+
     reader.on('error', err => {
-      console.error(`Error (${reader.reader.name}):`, err);
+      console.error(`Erreur (${reader.reader.name}) :`, err);
     });
-    
+
     reader.on('end', () => {
-      console.log(`Reader ${reader.reader.name} disconnected.`);
+      console.log(`Reader ${reader.reader.name} déconnecté.`);
     });
   });
-  
+
   nfc.on('error', err => {
-    console.error("NFC error:", err);
+    console.error("Erreur NFC :", err);
   });
 }
 

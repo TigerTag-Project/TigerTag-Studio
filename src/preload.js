@@ -1,7 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  scanCard: () => ipcRenderer.invoke('scan-card'),
+  readTag: () => ipcRenderer.invoke('readTag'),
   makeTag: (formData) => ipcRenderer.invoke('make-tag', formData),
   updateDB: () => ipcRenderer.invoke('update-db'),
   loadDBData: (key) => ipcRenderer.invoke('load-db-data', key),

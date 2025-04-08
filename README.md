@@ -26,3 +26,4 @@ This project is a modular Node.js implementation for handling smartcard protocol
 
    ```bash
    npm install
+   npm start

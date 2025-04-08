@@ -5,11 +5,11 @@
 
 const logger = require('./utils/logger');
 const smartcard = require('./utils/smartcard');
-const resetModule = require('./utils/reset');
+// const resetModule = require('./utils/reset');
 
 // Import TigerTag protocol modules
 const tigerTagReader = require('./protocols/tigertag/reader');
-const tigerTagDecoder = require('./protocols/tigertag/decoder');
+//const tigerTagDecoder = require('./protocols/tigertag/decoder');
 const tigerTagWriter = require('./protocols/tigertag/writer');
 const tigerTagPro = require('./protocols/tigertag/pro');
 

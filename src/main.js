@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron'); // Electron modules for creating windows and handling IPC
 const path = require('path'); // Path module for handling file paths
-const resetModule = require('./protocols/tigertag/reset'); // Chemin mis à jour
+// const resetModule = require('./protocols/tigertag/reset'); // Chemin mis à jour
 const logger = require('./utils/logger'); // Logger for logging messages
 const dbService = require('./services/tigertag_db'); // Service for managing the TigerTag database
 

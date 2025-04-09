@@ -21,7 +21,7 @@ function createWindow () {
 }
 
 app.whenReady().then(async () => {
-  createWindow();
+  
 
   // Update the local DB at application startup
   try {
@@ -30,6 +30,8 @@ app.whenReady().then(async () => {
   } catch (error) {
     console.error('Error updating local DB:', error);
   }
+  
+  createWindow();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -51,6 +53,7 @@ ipcMain.handle('readTag', async () => {
       }
       // Préparer un objet "plat" pour l'envoi au renderer (car certains types ne se transfèrent pas bien)
       const result = {
+        uidNumeric: tagData.uidNumeric,
         tigerTagID: tagData.tigerTagID,
         productID: Array.from(tagData.productID),
         productIdDecimal: tagData.productIdDecimal,

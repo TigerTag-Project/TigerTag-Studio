@@ -1,8 +1,14 @@
 document.getElementById('scanActionBtn').addEventListener('click', async () => {
   try {
     const tagData = await window.electronAPI.readTag();
+
+    console.log("Objet tagData reçu dans renderer :", tagData);
+
+    
     const resultDiv = document.getElementById('scanResult');
     
+    
+
     const rgbHex = ((tagData.color >>> 8) & 0xFFFFFF).toString(16).padStart(6, '0');
     const colorHex = '#' + rgbHex;
     const r = (tagData.color >> 24) & 0xFF;
@@ -10,7 +16,10 @@ document.getElementById('scanActionBtn').addEventListener('click', async () => {
     const b = (tagData.color >> 8) & 0xFF;
     const a = (tagData.color & 0xFF);
     
+    
+    
     const resultHTML = `
+      <p>Tag ID: ${tagData.uidNumeric}</p>
       <p>Version: ${tagData.versionLabel || 'N/A'} (ID : ${tagData.tigerTagID})</p>
       <p>ProductID: ${tagData.productIdDecimal ?? 'N/A'} (${tagData.productID.join(' ')})</p>
       <p>Material: ${tagData.materialLabel || 'N/A'} (ID : ${tagData.materialID})</p>

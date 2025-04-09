@@ -252,6 +252,7 @@ function readTag(callback) {
     console.log(`Reader ${reader.reader.name} detected for reading.`);
     reader.on('card', async card => {
       console.log("Card detected for reading:", card);
+      console.log("UID de la carte :", card.uid);
       try {
         // Lire 144 octets à partir du bloc 4
         const data = await reader.read(4, 144); // retourne un Buffer
@@ -259,7 +260,16 @@ function readTag(callback) {
         const arrayBuffer = data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
         const tagData = new TigerTagSpoolData(arrayBuffer);
 
+        tagData.uid = card.uid;
+        const uidBigInt = BigInt("0x" + tagData.uid);
+        console.log("UID BigInt:", uidBigInt); 
+        tagData.uidNumeric = uidBigInt.toString(); // conversion en chaîne
+        // callback(null, tagData);
+        console.log("UID string:", tagData.uidNumeric); 
+        
+
         // Enrichissement des données avec les labels issus des JSON
+        
         tagData.versionLabel = lookupLabel('versionId', tagData.tigerTagID);
         tagData.materialLabel = lookupLabel('materialId', tagData.materialID);
         tagData.brandLabel = lookupLabel('brandId', tagData.brandID);

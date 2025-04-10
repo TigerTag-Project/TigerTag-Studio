@@ -1,33 +1,53 @@
 {
-    "name": "tigertag-studio-light",
-    "version": "1.0.0",
-    "description": "A modular Node.js project for TigerTag Maker and Pro protocols with stubs for future protocols.",
-    "main": "src/main.js",
-    "scripts": {
-        "start": "electron .",
-        "test": "jest",
-        "rebuild": "electron-rebuild -f -w @pokusew/pcsclite"
+  "name": "tigertag-studio-light",
+  "version": "1.0.0",
+  "description": "A modular Node.js project for TigerTag Maker and Pro protocols with stubs for future protocols.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "jest",
+    "rebuild": "npx @electron/rebuild",
+    "build": "electron-builder",
+    "dist": "electron-builder --mac --win --x64",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TigerTag-Project/tigertag-studio-light.git"
+  },
+  "author": "TigerTag",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "nfc-pcsc": "^0.8.1",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "electron": "^25.0.0",
+    "@electron/rebuild": "^3.7.1",
+    "autoprefixer": "^10.4.21",
+    "jest": "^29.2.1",
+    "postcss": "^8.5.3",
+    "electron-builder": "^24.3.0"
+  },
+  "build": {
+    "appId": "com.tigertag.studio",
+    "productName": "TigerTag Studio",
+    "directories": {
+      "output": "dist"
     },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/TigerTag-Project/tigertag-studio-light.git"
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "target": "dmg"
     },
-    "author": "TigerTag",
-    "license": "MIT",
-    "dependencies": {
-        "axios": "^1.8.4",
-        "electron": "^25.0.0",
-        "nfc-pcsc": "^0.8.1",
-        "winston": "^3.8.2"
-    },
-    "devDependencies": {
-        "@electron/rebuild": "^3.7.1",
-        "autoprefixer": "^10.4.21",
-        "electron-rebuild": "^3.2.9",
-        "jest": "^29.2.1",
-        "postcss": "^8.5.3"
-    },
-    "engines": {
-        "node": ">=16.0.0"
+    "win": {
+      "target": "nsis"
     }
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }

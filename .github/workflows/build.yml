@@ -9,7 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-13, windows-latest]
+        os: [macos-latest, windows-latest]
 
     steps:
       - name: 📥 Checkout code
@@ -29,8 +29,11 @@ jobs:
       - name: 🛠 Build app
         run: npm run build
 
-      - name: 📤 Upload artifacts
-        uses: actions/upload-artifact@v2.3.1
+      - name: 📤 Upload build artifacts
+        uses: actions/upload-artifact@v4
         with:
-          name: ${{ runner.os }} Build
-          path: dist/
+          name: TigerTag-${{ runner.os }}
+          path: |
+            dist/*.exe
+            dist/*.dmg
+            !dist/*.blockmap

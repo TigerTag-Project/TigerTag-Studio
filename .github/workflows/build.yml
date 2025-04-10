@@ -1,6 +1,7 @@
 name: Build TigerTag Studio
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
 

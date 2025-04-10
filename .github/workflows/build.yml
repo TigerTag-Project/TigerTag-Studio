@@ -30,7 +30,7 @@ jobs:
         run: npm run build
 
       - name: 📤 Upload artifacts
-        uses: uses: actions/upload-artifact@v2.3.1
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: ${{ runner.os }} Build
           path: dist/

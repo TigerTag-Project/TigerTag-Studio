@@ -28,6 +28,8 @@ jobs:
         run: npm run rebuild
 
       - name: 🛠 Build app
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run build
 
       - name: 📤 Upload build artifacts

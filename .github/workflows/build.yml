@@ -30,7 +30,7 @@ jobs:
       - name: 🛠 Build app
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run build
+        run: npm run build -- --publish=always
 
       - name: 📤 Upload build artifacts
         uses: actions/upload-artifact@v4

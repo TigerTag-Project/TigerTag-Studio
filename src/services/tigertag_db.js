@@ -3,6 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const logger = require('../utils/logger');
 
+const { app } = require('electron');
+const isElectron = !!process.versions.electron;
+
 const endpoints = {
   versionId: 'https://api.tigertag.io/api:tigertag/version/get/all',
   materialId: 'https://api.tigertag.io/api:tigertag/material/filament/get/all',
@@ -13,21 +16,17 @@ const endpoints = {
   unitId: 'https://api.tigertag.io/api:tigertag/measure_unit/get/all'
 };
 
-const cacheDir = path.join(__dirname, '../../tigertag_db');
+// ✅ Cache local dynamique
+const cacheDir = isElectron
+  ? path.join(app.getPath('userData'), 'tigertag_db')
+  : path.join(__dirname, '../../tigertag_db');
 
-/**
- * Ensure the cache directory exists.
- */
 function ensureCacheDir() {
   if (!fs.existsSync(cacheDir)) {
     fs.mkdirSync(cacheDir, { recursive: true });
   }
 }
 
-/**
- * Fetch data from all endpoints and store them locally as JSON files.
- * @returns {Object} An object containing the data for each endpoint.
- */
 async function fetchAndCache() {
   ensureCacheDir();
   const result = {};
@@ -45,11 +44,6 @@ async function fetchAndCache() {
   return result;
 }
 
-/**
- * Load cached data for a given key.
- * @param {String} key - The key for the data (e.g., 'versionId').
- * @returns {Object|null} The parsed JSON data or null if not found.
- */
 function loadCachedData(key) {
   ensureCacheDir();
   const filePath = path.join(cacheDir, `${key}.json`);

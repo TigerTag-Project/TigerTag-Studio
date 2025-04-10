@@ -24,6 +24,9 @@ This project is a modular Node.js implementation for handling smartcard protocol
 
 1. Install dependencies:
 
-   ```bash
+   ```bashs
    npm install
    npm start
+
+   ```dist 
+   npm run dist

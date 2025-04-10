@@ -46,28 +46,30 @@ function renderOfflineData(tagData) {
   const a = (tagData.color & 0xFF);
 
   return `
-    <h3>TigerTag Maker (Offline)</h3>
-    <p><strong>Tag ID:</strong> ${tagData.uidNumeric}</p>
-    <p>Version: ${tagData.versionLabel || 'N/A'} (ID : ${tagData.tigerTagID})</p>
-    <p>ProductID: ${tagData.productIdDecimal ?? 'N/A'} (${tagData.productID.join(' ')})</p>
-    <p>Material: ${tagData.materialLabel || 'N/A'} (ID : ${tagData.materialID})</p>
-    <p>Aspect 1: ${tagData.aspect1Label || 'N/A'} (ID : ${tagData.aspect1ID})</p>
-    <p>Aspect 2: ${tagData.aspect2Label || 'N/A'} (ID : ${tagData.aspect2ID})</p>
-    <p>Type: ${tagData.typeLabel || 'N/A'} (ID : ${tagData.typeID})</p>
-    <p>Diameter: ${tagData.diameterLabel || 'N/A'} (ID : ${tagData.diameterID})</p>
-    <p>Brand: ${tagData.brandLabel || 'N/A'} (ID : ${tagData.brandID})</p>
-    <p>
-      Color:
-      <input type="color" value="${colorHex}" disabled style="width:40px;height:25px;border:none;vertical-align:middle;" />
-      ${colorHex} : RGBA(${r},${g},${b},${a})
-    </p>
-    <p>Weight: ${tagData.weightValue !== undefined ? tagData.weightValue : 'N/A'}</p>
-    <p>Unit: ${tagData.unitLabel || 'N/A'} (ID : ${tagData.unitId})</p>
-    <p>Temp Min: ${tagData.tempMin} °C</p>
-    <p>Temp Max: ${tagData.tempMax} °C</p>
-    <p>Dry Temp: ${tagData.dryTemp} °C</p>
-    <p>Dry Time: ${tagData.dryTime} h</p>
-    <p>TimeStamp: ${tagData.timeStampReadable ?? 'Not set'}</p>
+<div class="scan-result-card-offline">
+  <h3>TigerTag Maker (Offline)</h3>
+  <p><strong>Tag ID:</strong> ${tagData.uidNumeric}</p>
+  <p><strong>Version:</strong> ${tagData.versionLabel || 'N/A'} (ID : ${tagData.tigerTagID})</p>
+  <p><strong>ProductID:</strong> ${tagData.productIdDecimal ?? 'N/A'} (${tagData.productID.join(' ')})</p>
+  <p><strong>Material:</strong> ${tagData.materialLabel || 'N/A'} (ID : ${tagData.materialID})</p>
+  <p><strong>Aspect 1:</strong> ${tagData.aspect1Label || 'N/A'} (ID : ${tagData.aspect1ID})</p>
+  <p><strong>Aspect 2:</strong> ${tagData.aspect2Label || 'N/A'} (ID : ${tagData.aspect2ID})</p>
+  <p><strong>Type:</strong> ${tagData.typeLabel || 'N/A'} (ID : ${tagData.typeID})</p>
+  <p><strong>Diameter:</strong> ${tagData.diameterLabel || 'N/A'} (ID : ${tagData.diameterID})</p>
+  <p><strong>Brand:</strong> ${tagData.brandLabel || 'N/A'} (ID : ${tagData.brandID})</p>
+  <p>
+    <strong>Color:</strong>
+    <input type="color" value="${colorHex}" disabled />
+    ${colorHex} : RGBA(${r},${g},${b},${a})
+  </p>
+  <p><strong>Weight:</strong> ${tagData.weightValue !== undefined ? tagData.weightValue : 'N/A'}</p>
+  <p><strong>Unit:</strong> ${tagData.unitLabel || 'N/A'} (ID : ${tagData.unitId})</p>
+  <p><strong>Temp Min:</strong> ${tagData.tempMin} °C</p>
+  <p><strong>Temp Max:</strong> ${tagData.tempMax} °C</p>
+  <p><strong>Dry Temp:</strong> ${tagData.dryTemp} °C</p>
+  <p><strong>Dry Time:</strong> ${tagData.dryTime} h</p>
+  <p><strong>TimeStamp:</strong> ${tagData.timeStampReadable ?? 'Not set'}</p>
+</div>
   `;
 }
 
@@ -85,24 +87,26 @@ function renderOnlineData(apiData, uidNumeric) {
   const colorHex = '#' + rgbHex;
 
   return `
-    <h3>TigerTag Pro (Online)</h3>
-    <p><strong>Tag ID:</strong> ${uidNumeric}</p>
-    <p><strong>Title:</strong> ${apiData.title}</p>
-    <p><strong>Brand:</strong> ${apiData.brand}</p>
-    <p><strong>Series:</strong> ${apiData.series}</p>
-    <p><strong>Material:</strong> ${apiData.filament.material}</p>
-    <p>
-      <strong>Color:</strong> ${apiData.name}
-      <input type="color" value="${colorHex}" disabled style="width:40px;height:25px;border:none;vertical-align:middle;" />
-      ${colorHex} : RGBA(${r},${g},${b},${a})
-    </p>
-    <p><strong>Diameter:</strong> ${apiData.filament.diameter} mm</p>
-    <p><strong>Weight:</strong> ${apiData.filament.weight} g</p>
-    <p><strong>Drying:</strong> ${apiData.dryer.temp} °C for ${apiData.dryer.time} hours</p>
-    <p><strong>SKU:</strong> ${apiData.sku}</p>
-    <p><strong>Barcode:</strong> ${apiData.barcode}</p>
-    <p><strong>Bambu ID:</strong> ${apiData.metadata.bambuID}</p>
-    <p><strong>Creality ID:</strong> ${apiData.metadata.crealityID}</p>
-    <p><img src="${apiData.links.image}" alt="Product image" style="width:200px;" /></p>
+      <div class="scan-result-card">
+      <h3 class="result-title">TigerTag Pro (Online)</h3>
+      <p class="result-line"><strong>Tag ID:</strong> ${uidNumeric}</p>
+      <p class="result-line"><strong>Title:</strong> ${apiData.title}</p>
+      <p class="result-line"><strong>Brand:</strong> ${apiData.brand}</p>
+      <p class="result-line"><strong>Series:</strong> ${apiData.series}</p>
+      <p class="result-line"><strong>Material:</strong> ${apiData.filament.material}</p>
+      <p class="result-line">
+        <strong>Color:</strong> ${apiData.name}
+        <input type="color" value="${colorHex}" disabled class="color-chip" />
+        ${colorHex} : RGBA(${r},${g},${b},${a})
+      </p>
+      <p class="result-line"><strong>Diameter:</strong> ${apiData.filament.diameter} mm</p>
+      <p class="result-line"><strong>Weight:</strong> ${apiData.filament.weight} g</p>
+      <p class="result-line"><strong>Drying:</strong> ${apiData.dryer.temp} °C for ${apiData.dryer.time} hours</p>
+      <p class="result-line"><strong>SKU:</strong> ${apiData.sku}</p>
+      <p class="result-line"><strong>Barcode:</strong> ${apiData.barcode}</p>
+      <p class="result-line"><strong>Bambu ID:</strong> ${apiData.metadata.bambuID}</p>
+      <p class="result-line"><strong>Creality ID:</strong> ${apiData.metadata.crealityID}</p>
+      <p><img src="${apiData.links.image}" alt="Product image" class="result-image" /></p>
+    </div>
   `;
 }

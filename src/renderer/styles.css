@@ -1,63 +1,261 @@
-/* styles.css */
+/* Exemple de base */
 
-/* Reset */
-* {
+
+/* Exemple de base avec un bouton */
+
+button {
+  background-color: #1f1f1f;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #333;
+  transform: scale(1.2);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:hover .btn-icon {
+  transform: scale(1.2);
+}
+
+button.active .btn-icon {
+  transform: scale(1.3);
+}
+
+#menu-container {
+  height: 60px; /* par exemple */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #000000;
+  color: white;
+}
+.btn-icon {
+  width: 35px;
+  height: 35px;
+  transition: transform 0.2s ease;
+  filter: invert(1); /* rend noir → blanc */
+  background-color: transparent;
+}
+.btn-icon:hover {
+  transform: scale(1.5);
+}
+
+body {
+  background-color: #121212;
+  color: #f0f0f0;
+  font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
+}
+
+#mainContentForm {
+  display: none;
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+#loading {
+  text-align: center;
+  font-size: 1.2em;
+  color: #888;
+  padding: 40px;
+}
+
+fieldset {
+  border: 1px solid #444;
+  padding: 20px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+}
+
+legend {
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 0 12px;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #ddd;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  background-color: #2f2f2f;
+  border: 1px solid #555;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+  outline: none;
+  border-color: #ff6600;
+}
+
+input[type="color"] {
+  padding: 0;
+  border: none;
+  background: transparent;
+  width: 50px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.logo-centered {
+  display: block;
+  margin: 50px auto 0 auto;
+  max-width: 500px;
+  padding-left: 30px;
+  padding-right: 30px;
   box-sizing: border-box;
 }
 
-/* CSS Variables */
-:root {
-  --primary-color: #000000;
-  --secondary-color: #50e3c2;
-  --background-color: #904848;
-  --text-color: #333;
-  --button-bg: var(--primary-color);
-  --button-text: #fff;
-  --border-radius: 8px;
-  --font-family: 'Roboto', sans-serif;
+#scanContainer {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* 1) Fond global en noir (optionnel, si vous voulez TOUT en noir) */
-
-/* Home screen */
-.home-screen {
-  background-color: #000;
-  color: #fff;
-  min-height: 10h; /* ou calc(100vh - la hauteur du menu) */
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#scanContainer h1 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 1.8em;
+  color: #ffffff;
 }
 
-/* Buttons */
-.main-btn, button {
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: var(--border-radius);
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  margin: 0.5rem;
+#scanActionBtn {
+  display: block;
+  margin: 0 auto 32px auto;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #ff6600;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-.main-btn:hover, button:hover {
-  background-color: var(--secondary-color);
+#scanActionBtn:hover {
+  background-color: #e55d00;
   transform: scale(1.05);
 }
 
+#scanResult {
+  background-color: #2a2a2a;
+  padding: 24px;
+  border-radius: 8px;
+  color: #eee;
+  font-size: 15px;
+  line-height: 1.6;
+}
 
+.scan-result-card {
+  background-color: #2e2e2e;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+}
 
+.scan-result-card .result-title {
+  font-size: 1.5em;
+  color: #ffa500;
+  margin-bottom: 16px;
+  text-align: center;
+}
 
-/* Responsive */
-@media (max-width: 600px) {
-  button {
-    font-size: 1rem;
-    padding: 0.8rem 1.5rem;
-  }
+.scan-result-card .result-line {
+  margin: 10px 0;
+}
+
+.scan-result-card strong {
+  display: inline-block;
+  min-width: 120px;
+  color: #fff;
+}
+
+.color-chip {
+  margin-left: 10px;
+  vertical-align: middle;
+  border: none;
+  width: 32px;
+  height: 22px;
+  cursor: default;
+}
+
+.result-image {
+  display: block;
+  margin: 20px auto;
+  max-width: 220px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+.scan-result-card-offline {
+  background-color: #2e2e2e;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+}
+
+.scan-result-card-offline h3 {
+  font-size: 1.5em;
+  color: #00bcd4;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.scan-result-card-offline p {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.scan-result-card-offline strong {
+  display: inline-block;
+  min-width: 120px;
+  color: #fff;
+}
+
+.scan-result-card-offline input[type="color"] {
+  margin-left: 10px;
+  vertical-align: middle;
+  border: none;
+  width: 32px;
+  height: 22px;
+  cursor: default;
 }

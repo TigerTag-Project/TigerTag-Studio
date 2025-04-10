@@ -1,270 +1,337 @@
 [
   {
     "id": 1,
-    "name": "Atome3D"
+    "name": "Atome3D",
+    "active": true
   },
   {
     "id": 1120,
-    "name": "Proto-Pasta"
+    "name": "Proto-Pasta",
+    "active": true
   },
   {
     "id": 2517,
-    "name": "Smart Materials 3D"
+    "name": "Smart Materials 3D",
+    "active": true
   },
   {
     "id": 2833,
-    "name": "Xstrand"
+    "name": "Xstrand",
+    "active": false
   },
   {
     "id": 3132,
-    "name": "Hatchbox"
+    "name": "Hatchbox",
+    "active": true
   },
   {
     "id": 4048,
-    "name": "Owa"
+    "name": "Owa",
+    "active": false
   },
   {
     "id": 4344,
-    "name": "MatterHackers"
+    "name": "MatterHackers",
+    "active": true
   },
   {
     "id": 4356,
-    "name": "Landu"
+    "name": "Landu",
+    "active": true
   },
   {
     "id": 7674,
-    "name": "Extrudr"
+    "name": "Extrudr",
+    "active": true
   },
   {
     "id": 7980,
-    "name": "Fillamentum"
+    "name": "Fillamentum",
+    "active": true
   },
   {
     "id": 8182,
-    "name": "Fiberlogy"
+    "name": "Fiberlogy",
+    "active": true
   },
   {
     "id": 8384,
-    "name": "Taulman3D"
+    "name": "Taulman3D",
+    "active": true
   },
   {
     "id": 8586,
-    "name": "NinjaTek"
+    "name": "NinjaTek",
+    "active": true
   },
   {
     "id": 8756,
-    "name": "BlueCast"
+    "name": "BlueCast",
+    "active": true
   },
   {
     "id": 8990,
-    "name": "Ice Filaments"
+    "name": "Ice Filaments",
+    "active": true
   },
   {
     "id": 9192,
-    "name": "3D Solutech"
+    "name": "3D Solutech",
+    "active": true
   },
   {
     "id": 9394,
-    "name": "Gizmo Dorks"
+    "name": "Gizmo Dorks",
+    "active": true
   },
   {
     "id": 9596,
-    "name": "Ziro"
+    "name": "Ziro",
+    "active": true
   },
   {
     "id": 9798,
-    "name": "AMOLEN"
+    "name": "AMOLEN",
+    "active": true
   },
   {
     "id": 11501,
-    "name": "InnovateFil"
+    "name": "InnovateFil",
+    "active": true
   },
   {
     "id": 12345,
-    "name": "MakerBot"
+    "name": "MakerBot",
+    "active": false
   },
   {
     "id": 15899,
-    "name": "Kimya"
+    "name": "Kimya",
+    "active": false
   },
   {
     "id": 15962,
-    "name": "Anycubic"
+    "name": "Anycubic",
+    "active": true
   },
   {
     "id": 19961,
-    "name": "Rosa3D"
+    "name": "Rosa3D",
+    "active": true
   },
   {
     "id": 20523,
-    "name": "Raise3D"
+    "name": "Raise3D",
+    "active": true
   },
   {
     "id": 23181,
-    "name": "ArianePlast"
+    "name": "ArianePlast",
+    "active": true
   },
   {
     "id": 23456,
-    "name": "Monoprice"
+    "name": "Monoprice",
+    "active": true
   },
   {
     "id": 26956,
-    "name": "Creality"
+    "name": "Creality",
+    "active": true
   },
   {
     "id": 28055,
-    "name": "Tag3D"
+    "name": "Tag3D",
+    "active": true
   },
   {
     "id": 28940,
-    "name": "Eryone"
+    "name": "Eryone",
+    "active": true
   },
   {
     "id": 33788,
-    "name": "Verbatim"
+    "name": "Verbatim",
+    "active": true
   },
   {
     "id": 34567,
-    "name": "Push Plastic"
+    "name": "Push Plastic",
+    "active": true
   },
   {
     "id": 35123,
-    "name": "Bambu Lab"
+    "name": "Bambu Lab",
+    "active": true
   },
   {
     "id": 37434,
-    "name": "Winkle"
+    "name": "Winkle",
+    "active": true
   },
   {
     "id": 39652,
-    "name": "3DXTech"
+    "name": "3DXTech",
+    "active": true
   },
   {
     "id": 41932,
-    "name": "Jamg He"
+    "name": "Jamg He",
+    "active": true
   },
   {
     "id": 45670,
-    "name": "Panchroma"
+    "name": "Panchroma",
+    "active": true
   },
   {
     "id": 45678,
-    "name": "Atomic Filament"
+    "name": "Atomic Filament",
+    "active": true
   },
   {
     "id": 46392,
-    "name": "Prusa"
+    "name": "Prusa",
+    "active": true
   },
   {
     "id": 47930,
-    "name": "eSun"
+    "name": "eSun",
+    "active": true
   },
   {
     "id": 48804,
-    "name": "R3D"
+    "name": "R3D",
+    "active": true
   },
   {
     "id": 50604,
-    "name": "Polymaker"
+    "name": "Polymaker",
+    "active": true
   },
   {
     "id": 51443,
-    "name": "BASF"
+    "name": "BASF",
+    "active": true
   },
   {
     "id": 51857,
-    "name": "Sunlu"
+    "name": "Sunlu",
+    "active": true
   },
   {
     "id": 52222,
-    "name": "ColorFabb"
+    "name": "ColorFabb",
+    "active": true
   },
   {
     "id": 53043,
-    "name": "FormFutura"
+    "name": "FormFutura",
+    "active": true
   },
   {
     "id": 53640,
-    "name": "Magigoo"
+    "name": "Magigoo",
+    "active": true
   },
   {
     "id": 53856,
-    "name": "Lattice Medical"
+    "name": "Lattice Medical",
+    "active": true
   },
   {
     "id": 55763,
-    "name": "Nanovia"
+    "name": "Nanovia",
+    "active": true
   },
   {
     "id": 56780,
-    "name": "Fiberon"
+    "name": "Fiberon",
+    "active": true
   },
   {
     "id": 56789,
-    "name": "Coex 3D"
+    "name": "Coex 3D",
+    "active": true
   },
   {
     "id": 57209,
-    "name": "FrancoFil"
+    "name": "FrancoFil",
+    "active": true
   },
   {
     "id": 57632,
-    "name": "Elegoo"
+    "name": "Elegoo",
+    "active": true
   },
   {
     "id": 58410,
-    "name": "AzureFilm"
+    "name": "AzureFilm",
+    "active": true
   },
   {
     "id": 60882,
-    "name": "Recreus"
+    "name": "Recreus",
+    "active": true
   },
   {
     "id": 65535,
-    "name": "Generic"
+    "name": "Generic",
+    "active": true
   },
   {
-    "id": 67890,
-    "name": "IC3D"
+    "id": null,
+    "name": "IC3D",
+    "active": true
   },
   {
-    "id": 78901,
-    "name": "3D-Fuel"
+    "id": null,
+    "name": "3D-Fuel",
+    "active": true
   },
   {
-    "id": 99100,
-    "name": "Tianse"
+    "id": null,
+    "name": "Tianse",
+    "active": true
   },
   {
-    "id": 101102,
-    "name": "Tronxy"
+    "id": null,
+    "name": "Tronxy",
+    "active": true
   },
   {
-    "id": 103104,
-    "name": "Geeetech"
+    "id": null,
+    "name": "Geeetech",
+    "active": true
   },
   {
-    "id": 105106,
-    "name": "QIDI Tech"
+    "id": null,
+    "name": "QIDI Tech",
+    "active": true
   },
   {
-    "id": 107108,
-    "name": "Flashforge"
+    "id": null,
+    "name": "Flashforge",
+    "active": true
   },
   {
-    "id": 109110,
-    "name": "Jayo"
+    "id": null,
+    "name": "Jayo",
+    "active": true
   },
   {
-    "id": 111112,
-    "name": "Yousu"
+    "id": null,
+    "name": "Yousu",
+    "active": true
   },
   {
-    "id": 113114,
-    "name": "Overture"
+    "id": null,
+    "name": "Overture",
+    "active": true
   },
   {
-    "id": 202134,
-    "name": "3D4Makers"
+    "id": null,
+    "name": "3D4Makers",
+    "active": true
   }
 ]

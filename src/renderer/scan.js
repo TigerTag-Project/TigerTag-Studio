@@ -19,7 +19,7 @@ document.getElementById('scanActionBtn').addEventListener('click', async () => {
         if (!apiResponse.ok) throw new Error("Réponse API invalide");
 
         const apiData = await apiResponse.json();
-        resultDiv.innerHTML = renderOnlineData(apiData, uidNumeric);
+        resultDiv.innerHTML = renderOnlineData(apiData, uidNumeric, tagData.timeStampReadable);
 
       } catch (apiError) {
         console.warn("Échec de l'API, fallback offline :", apiError);
@@ -74,39 +74,58 @@ function renderOfflineData(tagData) {
 }
 
 // === AFFICHAGE ONLINE (TigerTag Pro) ===
-function renderOnlineData(apiData, uidNumeric) {
-  // Extraire les composantes RGBA depuis la chaîne "#RRGGBBAA"
-  const rawColor = apiData.filament.color.replace('#', '');
-  const rgbaInt = parseInt(rawColor, 16);
-  const r = (rgbaInt >> 24) & 0xFF;
-  const g = (rgbaInt >> 16) & 0xFF;
-  const b = (rgbaInt >> 8) & 0xFF;
-  const a = rgbaInt & 0xFF;
+function renderOnlineData(apiData, uidNumeric, offlineTimestamp) {
 
-  const rgbHex = rawColor.substring(0, 6);
-  const colorHex = '#' + rgbHex;
+  const rawColor = apiData.filament.color; // ex: "025BFFFF"
+  const colorHex = `#${rawColor.substring(0, 6)}`;
+  const r = parseInt(rawColor.substring(0, 2), 16);
+  const g = parseInt(rawColor.substring(2, 4), 16);
+  const b = parseInt(rawColor.substring(4, 6), 16);
+  const a = parseInt(rawColor.substring(6, 8), 16); 
+
+  const timestamp = offlineTimestamp || 'Not set';
 
   return `
       <div class="scan-result-card">
       <h3 class="result-title">TigerTag Pro (Online)</h3>
       <p class="result-line"><strong>Tag ID:</strong> ${uidNumeric}</p>
+      <p><img src="${apiData.links.image}" alt="Product image" class="result-image" /></p>
       <p class="result-line"><strong>Title:</strong> ${apiData.title}</p>
+      <p class="result-line"><strong>Name:</strong> ${apiData.name}</p>
       <p class="result-line"><strong>Brand:</strong> ${apiData.brand}</p>
       <p class="result-line"><strong>Series:</strong> ${apiData.series}</p>
       <p class="result-line"><strong>Material:</strong> ${apiData.filament.material}</p>
-      <p class="result-line">
-        <strong>Color:</strong> ${apiData.name}
-        <input type="color" value="${colorHex}" disabled class="color-chip" />
-        ${colorHex} : RGBA(${r},${g},${b},${a})
-      </p>
+      <p class="result-line"><strong>Aspect 1:</strong> ${apiData.filament.aspect1}</p>
+      <p class="result-line"><strong>Aspect 2:</strong> ${apiData.filament.aspect2}</p>
+      <p class="result-line"><strong>Shore:</strong> ${apiData.filament.shore}</p>
       <p class="result-line"><strong>Diameter:</strong> ${apiData.filament.diameter} mm</p>
       <p class="result-line"><strong>Weight:</strong> ${apiData.filament.weight} g</p>
+      <p class="result-line"><strong>Recycled:</strong> ${apiData.filament.recycled ? '✅' : 'No'}</p>
+      <p class="result-line"><strong>Refill:</strong> ${apiData.filament.refill ? '✅' : 'No'}</p>
+      <p class="result-line">
+        <strong>Color:</strong>
+        <input type="color" value="${colorHex}" disabled class="color-chip" />
+        ${colorHex} : RGBA(${r}, ${g}, ${b}, ${a})<br/>
+      </p>
+      <p class="result-line"><strong>Color Type:</strong> ${apiData.filament.color_info?.type || 'N/A'}</p>
+      <p class="result-line"><strong>Color List:</strong> ${(apiData.filament.color_info?.colors || []).filter(Boolean).join(', ')}</p>
       <p class="result-line"><strong>Drying:</strong> ${apiData.dryer.temp} °C for ${apiData.dryer.time} hours</p>
       <p class="result-line"><strong>SKU:</strong> ${apiData.sku}</p>
       <p class="result-line"><strong>Barcode:</strong> ${apiData.barcode}</p>
-      <p class="result-line"><strong>Bambu ID:</strong> ${apiData.metadata.bambuID}</p>
-      <p class="result-line"><strong>Creality ID:</strong> ${apiData.metadata.crealityID}</p>
-      <p><img src="${apiData.links.image}" alt="Product image" class="result-image" /></p>
+      <p class="result-line"><strong>Bambu ID:</strong> ${apiData.metadata.bambuLabel} (${apiData.metadata.bambuID})</p>
+      <p class="result-line"><strong>Creality ID:</strong> ${apiData.metadata.crealityLabel} (${apiData.metadata.crealityID})</p>
+      <p><strong>TimeStamp:</strong> ${timestamp}</p>
+      <p class="result-line"><strong>Documents:</strong>
+        <ul>
+          <li><a href="${apiData.links.tds}" target="_blank">TDS</a></li>
+          <li><a href="${apiData.links.msds}" target="_blank">MSDS</a></li>
+          <li><a href="${apiData.links.rohs}" target="_blank">RoHS</a></li>
+          <li><a href="${apiData.links.reach}" target="_blank">REACH</a></li>
+          <li><a href="${apiData.links.tips}" target="_blank">Tips</a></li>
+          <li><a href="${apiData.links.youtube}" target="_blank">YouTube</a></li>
+        </ul>
+      </p>
+      
     </div>
   `;
 }

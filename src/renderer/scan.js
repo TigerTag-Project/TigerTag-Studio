@@ -89,7 +89,7 @@ function renderOnlineData(apiData, uidNumeric, offlineTimestamp) {
       <div class="scan-result-card">
       <h3 class="result-title">TigerTag Pro (Online)</h3>
       <p class="result-line"><strong>Tag ID:</strong> ${uidNumeric}</p>
-      <p><img src="${apiData.links.image}" alt="Product image" class="result-image" /></p>
+      <p><img src="${apiData.images.main_src}" alt="Product image" class="result-image" /></p>
       <p class="result-line"><strong>Title:</strong> ${apiData.title}</p>
       <p class="result-line"><strong>Name:</strong> ${apiData.name}</p>
       <p class="result-line"><strong>Brand:</strong> ${apiData.brand}</p>
@@ -102,14 +102,19 @@ function renderOnlineData(apiData, uidNumeric, offlineTimestamp) {
       <p class="result-line"><strong>Weight:</strong> ${apiData.filament.weight} g</p>
       <p class="result-line"><strong>Recycled:</strong> ${apiData.filament.recycled ? '✅' : 'No'}</p>
       <p class="result-line"><strong>Refill:</strong> ${apiData.filament.refill ? '✅' : 'No'}</p>
+      <p class="result-line"><strong>Refill:</strong> ${apiData.filament.filled ? '✅' : 'No'}</p>
       <p class="result-line">
         <strong>Color:</strong>
         <input type="color" value="${colorHex}" disabled class="color-chip" />
         ${colorHex} : RGBA(${r}, ${g}, ${b}, ${a})<br/>
       </p>
       <p class="result-line"><strong>Color Type:</strong> ${apiData.filament.color_info?.type || 'N/A'}</p>
+      <p class="result-line"><strong>Transmission Dist:</strong> ${apiData.filament.transmission_dist}</p>
       <p class="result-line"><strong>Color List:</strong> ${(apiData.filament.color_info?.colors || []).filter(Boolean).join(', ')}</p>
       <p class="result-line"><strong>Drying:</strong> ${apiData.dryer.temp} °C for ${apiData.dryer.time} hours</p>
+      <p class="result-line"><strong>Nozzle min:</strong> ${apiData.nozzle.temp_min} °C /<strong>Nozzle max:</strong> ${apiData.nozzle.temp_max} °C</p>
+      <p class="result-line"><strong>Temp min:</strong> ${apiData.bed.temp_min} °C /<strong>Temp max:</strong> ${apiData.bed.temp_max} °C</p>
+      <p class="result-line"><strong>Fan min:</strong> ${apiData.fan.speed_min} % /<strong>Fan max:</strong> ${apiData.fan.speed_max} %</p>
       <p class="result-line"><strong>SKU:</strong> ${apiData.sku}</p>
       <p class="result-line"><strong>Barcode:</strong> ${apiData.barcode}</p>
       <p class="result-line"><strong>Bambu ID:</strong> ${apiData.metadata.bambuLabel} (${apiData.metadata.bambuID})</p>

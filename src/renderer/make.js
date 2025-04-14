@@ -73,7 +73,7 @@ document.getElementById('mainContentForm').style.display = 'block';
 
   await loadDBSelectData('aspect1Id', 'aspectId');
   await loadDBSelectData('aspect2Id', 'aspectId');
-  await loadDBSelectData('versionId', 'versionId');
+  // await loadDBSelectData('versionId', 'versionId');
   await loadDBSelectData('typeId', 'typeId');
   await loadDBSelectData('diameterId', 'diameterId');
   await loadDBSelectData('unitId', 'unitId');

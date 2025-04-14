@@ -30,15 +30,15 @@
         <div class="field-group"><label for="typeId">Type:</label><select id="typeId"></select></div>
         <div class="field-group"><label for="diameterId">Diameter:</label><select id="diameterId"></select></div>
         <div class="field-group"><label for="unitId">Unit:</label><select id="unitId"><option value="21">g</option></select></div>
-        <div class="field-group"><label for="weight">Weight (g):</label><input type="number" id="weight" value="1000" /></div>
+        <div class="field-group"><label for="weight">Weight (g):</label><input type="number" id="weight" value="1000" min="0"max="100000"/></div>
       </fieldset>
 
       <fieldset>
         <legend>Temperatures</legend>
-        <div class="field-group"><label for="tempMin">Temp Min (°C):</label><input type="number" id="tempMin" /></div>
-        <div class="field-group"><label for="tempMax">Temp Max (°C):</label><input type="number" id="tempMax" /></div>
-        <div class="field-group"><label for="dryTemp">Dry Temp (°C):</label><input type="number" id="dryTemp" /></div>
-        <div class="field-group"><label for="dryTime">Dry Time (h):</label><input type="number" id="dryTime" /></div>
+        <div class="field-group"><label for="tempMin">Temp Min (°C):</label><input type="number" id="tempMin" min="90"max="450"/></div>
+        <div class="field-group"><label for="tempMax">Temp Max (°C):</label><input type="number" id="tempMax" min="90"max="450"/></div>
+        <div class="field-group"><label for="dryTemp">Dry Temp (°C):</label><input type="number" id="dryTemp" min="30"max="255"/></div>
+        <div class="field-group"><label for="dryTime">Dry Time (h):</label><input type="number" id="dryTime" min="1" max="255"/></div>
       </fieldset>
     </details>
 

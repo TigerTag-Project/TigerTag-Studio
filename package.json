@@ -1,5 +1,5 @@
 {
-  "name": "Tigertag Studio",
+  "name": "Tigertag-Studio",
   "version": "1.0.0",
   "description": "A modular Node.js project for TigerTag Maker and Pro protocols with stubs for future protocols.",
   "main": "src/main.js",
@@ -8,7 +8,8 @@
     "test": "jest",
     "rebuild": "npx @electron/rebuild",
     "build": "electron-builder",
-    "dist": "electron-builder --mac --win --x64",
+    "distmac": "electron-builder --mac --x64",
+    "distwin": "electron-builder --win --x64",
     "postinstall": "electron-builder install-app-deps"
   },
   "repository": {

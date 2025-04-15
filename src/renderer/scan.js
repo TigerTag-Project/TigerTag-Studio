@@ -23,11 +23,11 @@ document.getElementById('scanActionBtn').addEventListener('click', async () => {
 
       } catch (apiError) {
         console.warn("Échec de l'API, fallback offline :", apiError);
-        resultDiv.innerHTML = renderOfflineData(tagData);
+        resultDiv.innerHTML = await renderOfflineData(tagData);
       }
     } else {
       // Mode TigerTag Maker (offline)
-      resultDiv.innerHTML = renderOfflineData(tagData);
+      resultDiv.innerHTML = await renderOfflineData(tagData);
     }
 
   } catch (err) {
@@ -37,7 +37,16 @@ document.getElementById('scanActionBtn').addEventListener('click', async () => {
 });
 
 // === AFFICHAGE OFFLINE (TigerTag Maker) ===
-function renderOfflineData(tagData) {
+async function renderOfflineData(tagData) {
+  tagData.versionLabel = await lookupLabel('versionId', tagData.tigerTagID);
+  tagData.materialLabel = await lookupLabel('materialId', tagData.materialID);
+  tagData.aspect1Label = await lookupLabel('aspectId', tagData.aspect1ID);
+  tagData.aspect2Label = await lookupLabel('aspectId', tagData.aspect2ID);
+  tagData.typeLabel = await lookupLabel('typeId', tagData.typeID);
+  tagData.diameterLabel = await lookupLabel('diameterId', tagData.diameterID);
+  tagData.brandLabel = await lookupLabel('brandId', tagData.brandID);
+  tagData.unitLabel = await lookupLabel('unitId', tagData.unitId);
+  
   const rgbHex = ((tagData.color >>> 8) & 0xFFFFFF).toString(16).padStart(6, '0');
   const colorHex = '#' + rgbHex;
   const r = (tagData.color >> 24) & 0xFF;
@@ -133,4 +142,22 @@ function renderOnlineData(apiData, uidNumeric, offlineTimestamp) {
       
     </div>
   `;
+}
+
+async function lookupLabel(dbKey, id) {
+  try {
+    const response = await window.electronAPI.loadDBData(dbKey);
+    if (response.success && Array.isArray(response.data)) {
+      const entry = response.data.find(item => Number(item.id) === Number(id));
+      if (entry) {
+        if (dbKey === 'versionId') return entry.name;
+        return entry.label || entry.name;
+      }
+    } else {
+      console.warn(`No data for ${dbKey}:`, response.error);
+    }
+  } catch (error) {
+    console.error(`IPC Error in lookupLabel(${dbKey}, ${id}):`, error);
+  }
+  return null;
 }

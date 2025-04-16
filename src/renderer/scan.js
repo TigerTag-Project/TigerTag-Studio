@@ -85,12 +85,15 @@ async function renderOfflineData(tagData) {
 // === AFFICHAGE ONLINE (TigerTag Pro) ===
 function renderOnlineData(apiData, uidNumeric, offlineTimestamp) {
 
-  const rawColor = apiData.filament.color; // ex: "025BFFFF"
-  const colorHex = `#${rawColor.substring(0, 6)}`;
-  const r = parseInt(rawColor.substring(0, 2), 16);
-  const g = parseInt(rawColor.substring(2, 4), 16);
-  const b = parseInt(rawColor.substring(4, 6), 16);
-  const a = parseInt(rawColor.substring(6, 8), 16); 
+  const rawColor = apiData.filament.color.startsWith('#')
+  ? apiData.filament.color.slice(1)
+  : apiData.filament.color;
+
+const colorHex = `#${rawColor.substring(0, 6)}`;
+const r = parseInt(rawColor.substring(0, 2), 16);
+const g = parseInt(rawColor.substring(2, 4), 16);
+const b = parseInt(rawColor.substring(4, 6), 16);
+const a = rawColor.length === 8 ? parseInt(rawColor.substring(6, 8), 16) : 255;
 
   const timestamp = offlineTimestamp || 'Not set';
 

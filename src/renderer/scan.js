@@ -111,10 +111,10 @@ const a = rawColor.length === 8 ? parseInt(rawColor.substring(6, 8), 16) : 255;
       <p class="result-line"><strong>Aspect 2:</strong> ${apiData.filament.aspect2}</p>
       <p class="result-line"><strong>Shore:</strong> ${apiData.filament.shore}</p>
       <p class="result-line"><strong>Diameter:</strong> ${apiData.filament.diameter} mm</p>
-      <p class="result-line"><strong>Weight:</strong> ${apiData.filament.weight} g</p>
+      <p class="result-line"><strong>Weight:</strong> ${apiData.filament.weight} ${apiData.filament.weight_unit}</p>
       <p class="result-line"><strong>Recycled:</strong> ${apiData.filament.recycled ? '✅' : 'No'}</p>
       <p class="result-line"><strong>Refill:</strong> ${apiData.filament.refill ? '✅' : 'No'}</p>
-      <p class="result-line"><strong>Refill:</strong> ${apiData.filament.filled ? '✅' : 'No'}</p>
+      <p class="result-line"><strong>Filled:</strong> ${apiData.filament.filled ? '✅' : 'No'}</p>
       <p class="result-line">
         <strong>Color:</strong>
         <input type="color" value="${colorHex}" disabled class="color-chip" />

@@ -175,6 +175,175 @@ document.getElementById('mainContentForm').style.display = 'block';
           
     });
 
+    // Dans la fonction initMakePage(), remplacez les écouteurs des boutons presets par :
+
+// Bouton Polymaker
+document.getElementById('polymakerBtn').addEventListener('click', async () => {
+  const presetData = {
+      tigerTagID: 3155151767, // TigerTag Pro V1.0
+      productID: 10,
+      materialID: 38219, // PLA
+      aspect1ID: 247, // Basic
+      aspect2ID: 0, // none
+      typeID: 142, // Filament
+      diameterID: 56, // 1.75mm
+      brandID: 50604, // Polymaker
+      color: 0x89d9d9, // Artic Teal
+      weight: 1000, // 1kg
+      unitId: 21, // g
+      tempMin: 190,
+      tempMax: 240,
+      dryTemp: 45,
+      dryTime: 6,
+  };
+  console.log('[make.js] Sending Polymaker preset:', presetData);
+  const result = await window.electronAPI.makeTag(presetData);
+  document.getElementById('status').innerText = result.success
+      ? 'Polymaker preset applied successfully!'
+      : `Error: ${result.error}`;
+  if (result.success) alert("Polymaker preset applied!");
+});
+
+// Bouton Elegoo
+document.getElementById('elegooBtn').addEventListener('click', async () => {
+  const presetData = {
+      tigerTagID: 3155151767, // TigerTag Pro V1.0
+      productID: 20,
+      materialID: 43518, // TPU
+      aspect1ID: 104,
+      aspect2ID: 255,
+      typeID: 142,
+      diameterID:  56, // 1.75mm
+      brandID: 57632, // Elegoo
+      color: 0x000000FF, // Black
+      weight: 1000,
+      unitId: 21,
+      tempMin: 200,
+      tempMax: 250,
+      dryTemp: 75,
+      dryTime: 8,
+  };
+
+  console.log('[make.js] Sending Elegoo preset:', presetData);
+  const result = await window.electronAPI.makeTag(presetData);
+  document.getElementById('status').innerText = result.success
+      ? 'Elegoo preset applied successfully!'
+      : `Error: ${result.error}`;
+  if (result.success) alert("Elegoo preset applied!");
+});
+
+// Bouton R3D
+document.getElementById('r3dBtn').addEventListener('click', async () => {
+  const presetData = {
+    tigerTagID: 3155151767, // TigerTag Pro V1.0
+    productID: 30,
+    materialID: 48310, // PLA
+    aspect1ID: 238,
+    aspect2ID: 0,
+    typeID: 142,
+    diameterID: 56, // 1.75mm
+    brandID: 48804, // R3D
+    color: 0x151515FF, // Ash Grey
+    weight: 1000,
+    unitId: 21,
+    tempMin: 210,
+    tempMax: 240,
+    dryTemp: 55,
+    dryTime: 6,
+  };
+
+  console.log('[make.js] Sending R3D preset:', presetData);
+  const result = await window.electronAPI.makeTag(presetData);
+  document.getElementById('status').innerText = result.success
+      ? 'R3D preset applied successfully!'
+      : `Error: ${result.error}`;
+  if (result.success) alert("R3D preset applied!");
+});
+
+// Bouton Sunlu
+document.getElementById('sunluBtn').addEventListener('click', async () => {
+  const presetData = {
+    tigerTagID: 3155151767, // TigerTag Pro V1.0
+    productID: 40,
+    materialID: 12, // PLA
+    aspect1ID: 104,
+    aspect2ID: 255,
+    typeID: 142,
+    diameterID: 1,
+    brandID: 51857, // Sunlu
+    color: 0x00FF00FF, // Vert opaque
+    weight: 1000,
+    unitId: 21,
+    tempMin: 195,
+    tempMax: 215,
+    dryTemp: 45,
+    dryTime: 6,
+  };
+
+  console.log('[make.js] Sending Sunlu preset:', presetData);
+  const result = await window.electronAPI.makeTag(presetData);
+  document.getElementById('status').innerText = result.success
+      ? 'Sunlu preset applied successfully!'
+      : `Error: ${result.error}`;
+  if (result.success) alert("Sunlu preset applied!");
+});
+
+// Bouton eSun
+document.getElementById('esunBtn').addEventListener('click', async () => {
+  const presetData = {
+    tigerTagID: 3155151767, // TigerTag Pro V1.0
+    productID: 50,
+    materialID: 99, // PLA+
+    aspect1ID: 104,
+    aspect2ID: 255,
+    typeID: 142,
+    diameterID: 1,
+    brandID: 47930, // eSun
+    color: 0x00C389FF, // JADE GREEN
+    weight: 1000,
+    unitId: 21,
+    tempMin: 210,
+    tempMax: 230,
+    dryTemp: 50,
+    dryTime: 8
+  };
+  
+  console.log('[make.js] Sending eSun preset:', presetData);
+  const result = await window.electronAPI.makeTag(presetData);
+  document.getElementById('status').innerText = result.success
+      ? 'eSun preset applied successfully!'
+      : `Error: ${result.error}`;
+  if (result.success) alert("eSun preset applied!");
+});
+
+// Bouton Rosa3D
+document.getElementById('rosa3dBtn').addEventListener('click', async () => {
+  const presetData = {
+    tigerTagID: 3155151767, // TigerTag Pro V1.0
+    productID: 60,
+    materialID: 38219, // PLA
+    aspect1ID: 92, // Silk
+    aspect2ID: 24, // Tricolor
+    typeID: 142,
+    diameterID: 1,
+    brandID: 47930, // Rosa3D
+    color: 0x1532A6FF, // Carnival
+    weight: 1000,
+    unitId: 21,
+    tempMin: 195,
+    tempMax: 235,
+    dryTemp: 50,
+    dryTime: 4
+  };
+
+  console.log('[make.js] Sending Rosa3D preset:', presetData);
+  const result = await window.electronAPI.makeTag(presetData);
+  document.getElementById('status').innerText = result.success
+      ? 'Rosa3D preset applied successfully!'
+      : `Error: ${result.error}`;
+  if (result.success) alert("Rosa3D preset applied!");
+});
+
     form.dataset.initialized = true;
   }
 };

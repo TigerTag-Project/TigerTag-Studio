@@ -46,6 +46,64 @@
       <button type="submit">🚀 Write Tag</button>
       <button type="button" id="resetTagBtn">🔄 Reset Tag</button>
     </div>
+    
   </form>
-  <div id="status" style="margin-top: 10px;"></div>
+
 </div>
+<div class="preset-buttons">
+  <h3>TigerTag Pro Online Tester:</h3>
+  <div class="preset-button-group">
+    <button type="button" id="polymakerBtn" class="preset-btn" style="background-color: #c70014; color: black;">Polymaker</button>
+    <button type="button" id="elegooBtn" class="preset-btn" style="background-color: #c70014; color: black;">Elegoo TPU</button>
+    <button type="button" id="r3dBtn" class="preset-btn" style="background-color: #c70014; color: black;">R3D PLA-CF</button>
+    <button type="button" id="sunluBtn" class="preset-btn" style="background-color: #c70014; color: black;">Sunlu PETG</button>
+    <button type="button" id="esunBtn" class="preset-btn" style="background-color: #c70014; color: black;">eSun PLA+</button>
+    <button type="button" id="rosa3dBtn" class="preset-btn" style="background-color: #c70014; color: black;">Rosa3D Tri</button>
+  </div>
+</div>
+</form>
+<div id="status" style="margin-top: 10px;"></div>
+</div>
+
+<div id="status" style="margin-top: 10px;"></div>
+
+<style>
+.preset-buttons {
+margin: 20px 0;
+padding: 15px;
+border: 1px solid #ddd;
+border-radius: 8px;
+background-color: #f9f9f9;
+}
+
+.preset-buttons h3 {
+margin-top: 0;
+color: #333;
+}
+
+.preset-button-group {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+}
+
+.preset-btn {
+padding: 10px 15px;
+border: none;
+border-radius: 5px;
+font-weight: bold;
+cursor: pointer;
+transition: all 0.2s;
+min-width: 120px;
+}
+
+.preset-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+
+.preset-btn:active {
+transform: translateY(0);
+}
+</style>

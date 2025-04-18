@@ -269,7 +269,7 @@ document.getElementById('sunluBtn').addEventListener('click', async () => {
     aspect1ID: 104,
     aspect2ID: 255,
     typeID: 142,
-    diameterID: 1,
+    diameterID: 56, // 1.75mm
     brandID: 51857, // Sunlu
     color: 0x00FF00FF, // Vert opaque
     weight: 1000,
@@ -297,7 +297,7 @@ document.getElementById('esunBtn').addEventListener('click', async () => {
     aspect1ID: 104,
     aspect2ID: 255,
     typeID: 142,
-    diameterID: 1,
+    diameterID: 56, // 1.75mm
     brandID: 47930, // eSun
     color: 0x00C389FF, // JADE GREEN
     weight: 1000,
@@ -325,7 +325,7 @@ document.getElementById('rosa3dBtn').addEventListener('click', async () => {
     aspect1ID: 92, // Silk
     aspect2ID: 24, // Tricolor
     typeID: 142,
-    diameterID: 1,
+    diameterID: 56, // 1.75mm
     brandID: 47930, // Rosa3D
     color: 0x1532A6FF, // Carnival
     weight: 1000,

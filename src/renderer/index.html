@@ -109,25 +109,32 @@
       }
     }
 
-    // Fonction pour charger le script make.js (si non déjà chargé)
-    function loadMakeScript() {
-      if (!document.getElementById('makeScript')) {
-        const script = document.createElement('script');
-        script.src = 'make.js';
-        script.id = 'makeScript';
-        script.defer = true;
-        script.onload = function() {
-          if (typeof initMakePage === 'function') {
-            initMakePage();
-          }
-        };
-        document.body.appendChild(script);
-      } else {
-        if (typeof initMakePage === 'function') {
-          initMakePage();
-        }
-      }
-    }
+  // Charger make.js si ce n'est pas déjà fait
+function loadMakeScript() {
+  if (!document.getElementById('makeScript')) {
+    const script = document.createElement('script');
+    script.src = 'make.js';
+    script.id = 'makeScript';
+    script.defer = true;
+    script.onload = initAll;       // appelle initAll() une fois chargé
+    document.body.appendChild(script);
+  } else {
+    initAll();                    // déjà chargé, on relance
+  }
+}
+
+// Fonction de regroupement
+function initAll() {
+  if (typeof initMakePage === 'function') {
+    initMakePage();              // setup Electron + selects + listeners
+  }
+  // Et tout de suite après on peut démarrer le color picker :
+  if (typeof drawColorWheel === 'function') {
+    drawColorWheel();
+    drawSLCircle();
+    updateUI();
+  }
+}
 
     // Fonction pour charger le script scan.js (si non déjà chargé)
     function loadScanScript() {

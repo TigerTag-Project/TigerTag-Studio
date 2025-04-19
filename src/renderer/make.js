@@ -1,3 +1,163 @@
+// JavaScript Color Picker
+const wheel = document.getElementById("colorWheel");
+const ctxWheel = wheel.getContext("2d");
+const sl = document.getElementById("slCircle");
+const ctxSL = sl.getContext("2d");
+
+const cursor = document.getElementById("cursor");
+const slCursor = document.getElementById("slCursor");
+const label = document.getElementById("label");
+const colorBox = document.getElementById("colorBox");
+const hslValue = document.getElementById("hslValue");
+const rgbValue = document.getElementById("rgbValue");
+const hexValue = document.getElementById("hexValue");
+
+const centerX = wheel.width / 2;
+const centerY = wheel.height / 2;
+const radiusOuter = 180;
+const radiusInner = 130;
+
+let hue = 0, sat = 100, lum = 50;
+
+function hslToRgb(h, s, l) {
+  s /= 100; l /= 100;
+  const k = n => (n + h/30) % 12;
+  const a = s * Math.min(l, 1-l);
+  const f = n => l - a * Math.max(-1, Math.min(k(n)-3, Math.min(9-k(n),1)));
+  return [ Math.round(f(0)*255), Math.round(f(8)*255), Math.round(f(4)*255) ];
+}
+
+function rgbToHex(r,g,b) {
+  return "#" + [r,g,b].map(x => x.toString(16).padStart(2,"0")).join("");
+}
+
+// Convertit du RGB en HSL
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+  if (max === min) {
+    h = s = 0;
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = ((g - b) / d + (g < b ? 6 : 0)); break;
+      case g: h = ((b - r) / d + 2); break;
+      case b: h = ((r - g) / d + 4); break;
+    }
+    h /= 6;
+  }
+  return [h * 360, s * 100, l * 100];
+}
+
+function drawColorWheel() {
+  const img = ctxWheel.createImageData(wheel.width, wheel.height);
+  const d = img.data;
+  for (let y=0; y<wheel.height; y++) {
+    for (let x=0; x<wheel.width; x++) {
+      const dx = x-centerX, dy = y-centerY;
+      const dist = Math.hypot(dx,dy);
+      if (dist>=radiusInner && dist<=radiusOuter) {
+        let ang = Math.atan2(dy,dx)*180/Math.PI;
+        if (ang<0) ang+=360;
+        const [r,g,b] = hslToRgb(ang,100,50);
+        const i = (y*wheel.width + x)*4;
+        d[i]=r; d[i+1]=g; d[i+2]=b; d[i+3]=255;
+      }
+    }
+  }
+  ctxWheel.putImageData(img,0,0);
+}
+
+function drawSLCircle() {
+  const w=sl.width, h=sl.height;
+  const img = ctxSL.createImageData(w,h);
+  const d = img.data;
+  for (let y=0; y<h; y++) {
+    for (let x=0; x<w; x++) {
+      const dx=x-w/2, dy=y-h/2;
+      if (Math.hypot(dx,dy) <= w/2) {
+        const s = (x/w)*100;
+        const l = 100 - (y/h)*100;
+        const [r,g,b] = hslToRgb(hue,s,l);
+        const i=(y*w+x)*4;
+        d[i]=r; d[i+1]=g; d[i+2]=b; d[i+3]=255;
+      }
+    }
+  }
+  ctxSL.putImageData(img,0,0);
+}
+
+// === Gestion du drag sur le color wheel ===
+function handleWheel(e) {
+  const rect = wheel.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  // Convertir en coordonnées internes du canvas
+  const scale = rect.width / wheel.width;
+  const xLocal = x / scale;
+  const yLocal = y / scale;
+  const dx = xLocal - centerX, dy = yLocal - centerY;
+  const d = Math.hypot(dx, dy);
+  if (d >= radiusInner && d <= radiusOuter) {
+    hue = (Math.atan2(dy, dx) * 180/Math.PI + 360) % 360;
+    const rad = hue * Math.PI/180;
+    // reposition du curseur
+    const cx = centerX + Math.cos(rad)*(radiusOuter+radiusInner)/2;
+    const cy = centerY + Math.sin(rad)*(radiusOuter+radiusInner)/2;
+    cursor.style.left = `${cx}px`;
+    cursor.style.top  = `${cy}px`;
+    drawSLCircle();
+    updateUI();
+  }
+}
+
+function updateUI() {
+  label.textContent = `H: ${Math.round(hue)}°, S: ${Math.round(sat)}%, L: ${Math.round(lum)}%`;
+  const [r,g,b] = hslToRgb(hue,sat,lum);
+  const hex = rgbToHex(r,g,b);
+  cursor.style.borderColor = `hsl(${hue},100%,50%)`;
+  colorBox.style.background = `hsl(${hue},${sat}%,${lum}%)`;
+  hslValue.textContent = `HSL: ${Math.round(hue)}, ${Math.round(sat)}%, ${Math.round(lum)}%`;
+  rgbValue.textContent = `RGB: ${r}, ${g}, ${b}`;
+  hexValue.textContent = `HEX: ${hex}`;
+}
+
+
+// Drag & click sur le wheel
+wheel.addEventListener("mousedown", handleWheel);
+wheel.addEventListener("mousemove", e => {
+  if (e.buttons === 1) handleWheel(e);
+});
+
+// drag & click dans SL
+function handleSL(e) {
+  // 1) calculer la position dans le petit cercle SL
+  const rect = sl.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const dx = x - sl.width/2, dy = y - sl.height/2;
+
+  // 2) si on est dans le cercle SL, on met à jour sat/lum
+  if (Math.hypot(dx, dy) <= sl.width/2) {
+    sat = (x / sl.width) * 100;
+    lum = 100 - (y / sl.height) * 100;
+    updateUI();
+
+    // 3) positionner le second curseur SL dans le wrapper
+    const wrapperRect = sl.parentElement.getBoundingClientRect();
+    const clickX = e.clientX - wrapperRect.left;
+    const clickY = e.clientY - wrapperRect.top;
+    slCursor.style.left = `${clickX}px`;
+    slCursor.style.top  = `${clickY}px`;
+  }
+}
+sl.addEventListener("mousedown", handleSL);
+sl.addEventListener("mousemove", e => { if (e.buttons===1) handleSL(e); });
+
+
+
 // Fonction pour remplir un select avec des options
 const populateSelect = (id, options) => {
   const select = document.getElementById(id);
@@ -108,7 +268,8 @@ document.getElementById('mainContentForm').style.display = 'block';
 
 
         // Récupérer la couleur RGB depuis l'input (ex: "#FF0000")
-        const colorRGB = parseInt(document.getElementById('color').value.replace('#',''), 16);
+        const [r, g, b] = hslToRgb(hue, sat, lum);
+        const colorRGB = (r << 16) | (g << 8) | b;
         // Récupérer la valeur alpha selon la case "transparent"
         // Si cochée, alpha = 75, sinon 255.
         const alpha = document.getElementById('transparent').checked ? 75 : 255;
@@ -345,7 +506,40 @@ document.getElementById('rosa3dBtn').addEventListener('click', async () => {
 });
 
     form.dataset.initialized = true;
+    
+    // --- Initialisation du color picker et SL cursor ---
+    drawColorWheel();
+    drawSLCircle();
+    updateUI();  // positionne le cursor hue via positionCursor()
+    
+    // Position initial du curseur SL au centre du canvas SL
+    const slHalf = sl.offsetWidth / 2;
+    slCursor.style.left = `${centerX}px`;
+    slCursor.style.top  = `${centerY}px`;
+    cursor.style.left = `${centerX}px`;
+    cursor.style.top = '40px'; // Ajustement pour le curseur
   }
+
+  // --- Configuration des préréglages de couleur ---
+const presetSquares = document.querySelectorAll('.preset-square');
+presetSquares.forEach(el => {
+  el.addEventListener('click', () => {
+    const hex = el.getAttribute('data-color');
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    // Convertir en HSL et mettre à jour le picker
+    const [h, s, l] = rgbToHsl(r, g, b);
+    hue = h; sat = s; lum = l;
+    drawSLCircle();
+    updateUI();
+    // Positionner le curseur SL à la bonne coordonnée
+    const xLocal = (sat / 100) * sl.width;
+    const yLocal = (1 - lum / 100) * sl.height;
+    slCursor.style.left = `${sl.offsetLeft + xLocal}px`;
+    slCursor.style.top  = `${sl.offsetTop  + yLocal}px`;
+  });
+});
 };
 
 // Exposer la fonction pour pouvoir la réinitialiser quand nécessaire

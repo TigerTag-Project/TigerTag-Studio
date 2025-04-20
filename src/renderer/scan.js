@@ -68,7 +68,7 @@ async function renderOfflineData(tagData) {
   <p><strong>Brand:</strong> ${tagData.brandLabel || 'N/A'} (ID : ${tagData.brandID})</p>
   <p>
     <strong>Color:</strong>
-    <input type="color" value="${colorHex}" disabled />
+    <input type="color" class="custom-color" value="${colorHex}" disabled />
     ${colorHex} : RGBA(${r},${g},${b},${a})
   </p>
   <p><strong>Weight:</strong> ${tagData.weightValue !== undefined ? tagData.weightValue : 'N/A'}</p>
@@ -98,8 +98,7 @@ const a = rawColor.length === 8 ? parseInt(rawColor.substring(6, 8), 16) : 255;
   const timestamp = offlineTimestamp || 'Not set';
 
   return `
-      <div class="scan-result-card">
-      <h3 class="result-title">TigerTag Pro (Online)</h3>
+      <legend>TigerTag Pro (Online)</legend>
       <p class="result-line"><strong>Tag ID:</strong> ${uidNumeric}</p>
       <p><img src="${apiData.images.main_src}" alt="Product image" class="result-image" /></p>
       <p class="result-line"><strong>Title:</strong> ${apiData.title}</p>
@@ -117,7 +116,7 @@ const a = rawColor.length === 8 ? parseInt(rawColor.substring(6, 8), 16) : 255;
       <p class="result-line"><strong>Filled:</strong> ${apiData.filament.filled ? '✅' : 'No'}</p>
       <p class="result-line">
         <strong>Color:</strong>
-        <input type="color" value="${colorHex}" disabled class="color-chip" />
+        <input type="color" class="custom-color" value="${colorHex}" disabled />
         ${colorHex} : RGBA(${r}, ${g}, ${b}, ${a})<br/>
       </p>
       <p class="result-line"><strong>Color Type:</strong> ${apiData.filament.color_info?.type || 'N/A'}</p>
@@ -142,8 +141,6 @@ const a = rawColor.length === 8 ? parseInt(rawColor.substring(6, 8), 16) : 255;
           <li><a href="${apiData.links.youtube}" target="_blank">YouTube</a></li>
         </ul>
       </p>
-      
-    </div>
   `;
 }
 

@@ -1,3 +1,55 @@
+  // Native color input and presets
+const colorInput = document.getElementById("color");
+const hexValue   = document.getElementById("hexValue");
+const rgbValue   = document.getElementById("rgbValue");
+const hslValue   = document.getElementById("hslValue");
+
+// conversion RGB → HSL
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+  if (max === min) {
+    h = s = 0; // gris
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+  return [ h * 360, s * 100, l * 100 ];
+}
+
+// écouteur pour mettre à jour les valeurs
+colorInput.addEventListener("input", e => {
+  const hex = e.target.value;
+  // Hex
+  hexValue.textContent = hex.toUpperCase();
+  // RGB
+  const r = parseInt(hex.slice(1,3), 16);
+  const g = parseInt(hex.slice(3,5), 16);
+  const b = parseInt(hex.slice(5,7), 16);
+  rgbValue.textContent = `${r},${g},${b}`;
+  // HSL
+  const [h, s, l] = rgbToHsl(r, g, b);
+  hslValue.textContent = `${Math.round(h)}°, ${Math.round(s)}%, ${Math.round(l)}%`;
+});
+
+
+  document.querySelectorAll(".preset-square").forEach(el => {
+    el.addEventListener("click", () => {
+      const hex = el.getAttribute("data-color");
+      colorInput.value = hex;
+      // trigger update of any input listeners if present
+      colorInput.dispatchEvent(new Event("input"));
+    });
+  });
+
+
 // Fonction pour remplir un select avec des options
 const populateSelect = (id, options) => {
   const select = document.getElementById(id);

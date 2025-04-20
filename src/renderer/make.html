@@ -1,13 +1,43 @@
-<!-- make.html -->
+<!--  <h1>Make TigerTag</h1> -->
+<link rel="stylesheet" href="styles.css" />
 <div id="loading">⏳ Loading TigerTag data...</div>
-<div id="mainContentForm" style="display: none;">
-  <h1>Make TigerTag</h1>
+<div id="mainContentForm">
   <form id="tagForm" autocomplete="off">
     <fieldset class="basic-info">
       <legend>Create TigerTag</legend>
+      <div class="preset-squares">
+        <div class="preset-square" data-color="#FFFFFF" style="background:#FFFFFF;"></div>
+        <div class="preset-square" data-color="#fff144" style="background:#fff144;"></div>
+        <div class="preset-square" data-color="#DCF478" style="background:#DCF478;"></div>
+        <div class="preset-square" data-color="#0ACC38" style="background:#0ACC38;"></div>
+        <div class="preset-square" data-color="#057748" style="background:#057748;"></div>
+        <div class="preset-square" data-color="#0d6284" style="background:#0d6284;"></div>
+        <div class="preset-square" data-color="#0EE2A0" style="background:#0EE2A0;"></div>
+        <div class="preset-square" data-color="#76D9F4" style="background:#9bacb0;"></div>
+        <div class="preset-square" data-color="#46a8f9" style="background:#46a8f9;"></div>
+        <div class="preset-square" data-color="#2850E0" style="background:#2850E0;"></div>
+        <div class="preset-square" data-color="#443089" style="background:#443089;"></div>
+        <div class="preset-square" data-color="#A03CF7" style="background:#A03CF7;"></div>
+        <div class="preset-square" data-color="#F330F9" style="background:#F330F9;"></div>
+        <div class="preset-square" data-color="#D4B1DD" style="background:#D4B1DD;"></div>
+        <div class="preset-square" data-color="#f95d73" style="background:#f95d73;"></div>
+        <div class="preset-square" data-color="#f72323" style="background:#f72323;"></div>
+        <div class="preset-square" data-color="#7c4b00" style="background:#7c4b00;"></div>
+        <div class="preset-square" data-color="#f98c36" style="background:#f98c36;"></div>
+        <div class="preset-square" data-color="#fcecd6" style="background:#fcecd6;"></div>
+        <div class="preset-square" data-color="#D3C5A3" style="background:#D3C5A3;"></div>
+        <div class="preset-square" data-color="#AF7933" style="background:#AF7933;"></div>
+        <div class="preset-square" data-color="#898989" style="background:#898989;"></div>
+        <div class="preset-square" data-color="#BCBCBC" style="background:#BCBCBC;"></div>
+        <div class="preset-square" data-color="#161616" style="background:#161616;"></div>
+      </div>
       <div class="color-selection">
-        <label for="color" class="sr-only">Color</label>
-        <input type="color" id="color" value="#FF0000" aria-label="Choose a color" />
+        <input type="color" id="color" class="custom-color" value="#FF0000" aria-label="Custom colors"/>
+        <div class="color-values">
+          <p>Hex: <span id="hexValue">#FF0000</span></p>
+          <p>RGB: <span id="rgbValue">255,0,0</span></p>
+          <p>HSL: <span id="hslValue">0°,100%,50%</span></p>
+        </div>
       </div>
       <div class="field-group"><label for="brandId">Brand:</label><select id="brandId"></select></div>
       <div class="field-group"><label for="materialId">Material:</label><select id="materialId"></select></div>
@@ -21,11 +51,11 @@
         <!-- <div class="field-group"><label for="versionId">Version:</label><select id="versionId"></select></div> -->
         <div class="field-group">
           <label for="transparent" class="toggle-label">
-            <span class="toggle-text">Transparent:</span>
+            <span class="toggle-text">Transculid:</span>
             <input type="checkbox" id="transparent" class="toggle" />
           </label>
         </div>
-        <div class="field-group"><label for="aspect1Id">Aspect:</label><select id="aspect1Id"></select></div>
+        <div class="field-group"><label for="aspect1Id">Aspect Primary:</label><select id="aspect1Id"></select></div>
         <div class="field-group"><label for="aspect2Id">Aspect Secondary:</label><select id="aspect2Id"></select></div>
         <div class="field-group"><label for="typeId">Type:</label><select id="typeId"></select></div>
         <div class="field-group"><label for="diameterId">Diameter:</label><select id="diameterId"></select></div>
@@ -38,42 +68,81 @@
         <div class="field-group"><label for="tempMin">Temp Min (°C):</label><input type="number" id="tempMin" min="90"max="450"/></div>
         <div class="field-group"><label for="tempMax">Temp Max (°C):</label><input type="number" id="tempMax" min="90"max="450"/></div>
         <div class="field-group"><label for="dryTemp">Dry Temp (°C):</label><input type="number" id="dryTemp" min="30"max="255"/></div>
-        <div class="field-group"><label for="dryTime">Dry Time (h):</label><input type="number" id="dryTime" min="1" max="255"/></div>
+        <div class="field-group"><label for="dryTime">Dry Time (H):</label><input type="number" id="dryTime" min="1" max="255"/></div>
       </fieldset>
     </details>
 
     <div class="button-group">
-      <button type="submit">🚀 Write Tag</button>
-      <button type="button" id="resetTagBtn">🔄 Reset Tag</button>
+      <button type="submit" id="writetag">🚀 Write Tag</button>
+      <button type="button" id="resetTagBtn">🔄</button>
     </div>
     
   </form>
 
 </div>
 <div class="preset-buttons">
-  <h3>TigerTag Pro Online Tester:</h3>
-  <div class="preset-button-group">
-    <button type="button" id="polymakerBtn" class="preset-btn" style="background-color: #c70014; color: black;">Polymaker</button>
-    <button type="button" id="elegooBtn" class="preset-btn" style="background-color: #c70014; color: black;">Elegoo TPU</button>
-    <button type="button" id="r3dBtn" class="preset-btn" style="background-color: #c70014; color: black;">R3D PLA-CF</button>
-    <button type="button" id="sunluBtn" class="preset-btn" style="background-color: #c70014; color: black;">Sunlu PETG</button>
-    <button type="button" id="esunBtn" class="preset-btn" style="background-color: #c70014; color: black;">eSun PLA+</button>
-    <button type="button" id="rosa3dBtn" class="preset-btn" style="background-color: #c70014; color: black;">Rosa3D Tri</button>
-  </div>
+  
+  <fieldset class="preset-button-group">
+    <legend>Tester : TigerTag Pro Online</legend>
+    <button type="button" id="polymakerBtn" class="preset-btn" style="background-color: #d2d9ff; color: black;">Polymaker</button>
+    <button type="button" id="elegooBtn" class="preset-btn" style="background-color: #d2d9ff; color: black;">Elegoo TPU</button>
+    <button type="button" id="r3dBtn" class="preset-btn" style="background-color: #d2d9ff; color: black;">R3D PLA-CF</button>
+    <button type="button" id="sunluBtn" class="preset-btn"" style="background-color: #d2d9ff; color: black;">Sunlu PETG</button>
+    <button type="button" id="esunBtn" class="preset-btn" style="background-color: #d2d9ff; color: black;">eSun PLA+</button>
+    <button type="button" id="rosa3dBtn" class="preset-btn" style="background-color: #d2d9ff; color: black;">Rosa3D Tri</button>
+  </fieldset>
 </div>
 </form>
-<div id="status" style="margin-top: 10px;"></div>
 </div>
 
-<div id="status" style="margin-top: 10px;"></div>
+<!-- <div id="status" style="margin-top: 10px;"></div> -->
 
 <style>
+
 .preset-buttons {
-margin: 20px 0;
-padding: 15px;
-border: 1px solid #ddd;
-border-radius: 8px;
-background-color: #f9f9f9;
+  background-color: #1f1f1f;;
+  position: relative;
+  padding: 5px 20px 5px 20px;
+  margin: 5px auto;
+  max-width: 505px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.preset-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;    /* centre les boutons horizontalement */
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background: #2e2e2e;
+  position: relative;
+  margin-top: 1rem;
+}
+
+/* Légende “flottante” */
+.preset‑button‑group legend {
+  position: absolute;
+  top: -0.75rem;               /* remonte le legend */
+  left: 0.5rem;                /* décale un peu vers la gauche */
+  padding: 0 0.5rem;
+  background: #1f1f1f;         /* même couleur que le parent pour masquer la bordure */
+  color: #ddd;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* Centre l'input type="color" et son label */
+.color-selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  gap: 8px; /* espace entre label et input si besoin */
 }
 
 .preset-buttons h3 {
@@ -90,14 +159,18 @@ gap: 10px;
 .preset-btn {
 padding: 10px 15px;
 border: none;
-border-radius: 5px;
+border-radius: 24px;
 font-weight: bold;
 cursor: pointer;
 transition: all 0.2s;
 min-width: 120px;
+transition: 
+    background-color 0.3s ease,   /* transition sur la couleur */
+    transform        0.2s ease;    /* petite mise à l’échelle */
 }
 
 .preset-btn:hover {
+background-color: #d6ff95;
 transform: translateY(-2px);
 box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
@@ -106,4 +179,21 @@ box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 .preset-btn:active {
 transform: translateY(0);
 }
+
+/* Presets under native color picker */
+.preset-squares {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.preset-square {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 </style>

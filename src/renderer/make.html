@@ -124,13 +124,15 @@
   margin-top: 1rem;
 }
 
+
 /* Légende “flottante” */
 .preset‑button‑group legend {
+  background-color: ;
   position: absolute;
   top: -0.75rem;               /* remonte le legend */
   left: 0.5rem;                /* décale un peu vers la gauche */
   padding: 0 0.5rem;
-  background: #1f1f1f;         /* même couleur que le parent pour masquer la bordure */
+  background: #2e2e2e;;         /* même couleur que le parent pour masquer la bordure */
   color: #ddd;
   font-size: 1.2rem;
   line-height: 1;
@@ -165,8 +167,8 @@ cursor: pointer;
 transition: all 0.2s;
 min-width: 120px;
 transition: 
-    background-color 0.3s ease,   /* transition sur la couleur */
-    transform        0.2s ease;    /* petite mise à l’échelle */
+    background-color 0.5s ease-out,   /* transition sur la couleur */
+    transform        0.5s ease-out;    /* petite mise à l’échelle */
 }
 
 .preset-btn:hover {
@@ -178,6 +180,8 @@ box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 
 .preset-btn:active {
 transform: translateY(0);
+background-color: #006c1b !important;
+transition: background-color 0s ease-in;
 }
 
 /* Presets under native color picker */
@@ -193,7 +197,12 @@ transform: translateY(0);
   height: 24px;
   border: 2px solid #fff;
   border-radius: 4px;
-  cursor: pointer;
+  transition: transform 0.5s ease-out;
+}
+
+.preset-square:hover {
+transform: scale(1.3);
+transition: transform 0s ease-in;
 }
 
 </style>

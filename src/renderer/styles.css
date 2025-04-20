@@ -3,7 +3,7 @@
 
 /* Exemple de base avec un bouton */
 
-button {
+.menuBtn {
   background-color: #1f1f1f;
   border: none;
   border-radius: 8px;
@@ -17,42 +17,48 @@ button {
 
 /* style normal */
 #writetag {
-  background-color: #646464;
-  transition: background-color 0.2s ease;
-  font-size: 14px bold;
-  padding: 12px;
-  transform: scale(1.2);
-  transition: 0.2s;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 120px;
+  transition: transform  0.5s ease-out;
+  transition: 
+      background-color 0.5s ease-out,   /* transition sur la couleur */
+      /* transform        0.2s ease;    /* petite mise à l’échelle */
+  
 }
 
 /* style au hover */
 #writetag:hover {
-  background-color: #006c1b;
   transform: scale(1.2);
-  
+  transition: transform 0s ease-in;
 }
+
 #writetag:active {
   background-color: #006c1b;
   transform: translate(0, 2px);
-  transform: scale(1.3);
+  transform: scale(1.2);
 }
 
 
 
-button:hover {
+.menuBtn:hover {
   background-color: #333;
   transform: scale(1.2);
 }
 
-button:active {
+.menuBtn:active {
   transform: scale(0.95);
 }
 
-button:hover .btn-icon {
+.menuBtn: .btn-icon {
   transform: scale(1.2);
 }
 
-button.active .btn-icon {
+.menuBtn: .btn-icon {
   transform: scale(1.3);
 }
 
@@ -92,15 +98,6 @@ body {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-#scanContainer {
-  display: block;
-  padding: 24px;
-  max-width: 500px;
-  margin: 0 auto;
-  background-color: #1f1f1f;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
 
 #result-lines {
   display: none;
@@ -184,29 +181,6 @@ input[type="color"] {
   padding-left: 30px;
   padding-right: 30px;
   box-sizing: border-box;
-}
-
-#scanContainer h1 {
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 1.8em;
-  color: #ffffff;
-}
-
-#scanActionBtn {
-  display: block;
-  margin: 0 auto 32px auto;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: #ff6600;
-  border-radius: 8px;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-#scanActionBtn:hover {
-  background-color: #e55d00;
-  transform: scale(1.05);
 }
 
 #scanResult {
@@ -368,9 +342,8 @@ input[type="color"].custom-color::-moz-color-swatch {
   text-align: right;
 }
 #resetTagBtn {
-  background-color: transparent;
-  transition: background-color 0.2s ease;
-  font-size: 20px;
+  background: none;       /* pas de fond */
+  border: none;           /* pas de bordure */
   font-weight: bold;  
   padding: 12px;
   margin: 5px;
@@ -381,7 +354,7 @@ input[type="color"].custom-color::-moz-color-swatch {
 /* Rotate reset button emoji on active */
 @keyframes rotate360 {
   from { transform: scale(1.6) rotate(0deg); }
-  to   { transform: scale(1.6) rotate(360deg); }
+  to   { transform: scale(1.6) rotate(180deg); }
 }
 
 #resetTagBtn:hover {

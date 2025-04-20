@@ -1,6 +1,6 @@
 document.getElementById('scanActionBtn').addEventListener('click', async () => {
   const resultDiv = document.getElementById('scanResult');
-  resultDiv.innerHTML = "Scanning...";
+  resultDiv.innerHTML = "<legend>Scanning...</legend>";
 
   try {
     const tagData = await window.electronAPI.readTag();
@@ -55,7 +55,6 @@ async function renderOfflineData(tagData) {
   const a = (tagData.color & 0xFF);
 
   return `
-<div class="scan-result-card-offline">
   <h3>TigerTag Maker (Offline)</h3>
   <p><strong>Tag ID:</strong> ${tagData.uidNumeric}</p>
   <p><strong>Version:</strong> ${tagData.versionLabel || 'N/A'} (ID : ${tagData.tigerTagID})</p>
@@ -78,7 +77,6 @@ async function renderOfflineData(tagData) {
   <p><strong>Dry Temp:</strong> ${tagData.dryTemp} °C</p>
   <p><strong>Dry Time:</strong> ${tagData.dryTime} h</p>
   <p><strong>TimeStamp:</strong> ${tagData.timeStampReadable ?? 'Not set'}</p>
-</div>
   `;
 }
 
@@ -95,52 +93,167 @@ const g = parseInt(rawColor.substring(2, 4), 16);
 const b = parseInt(rawColor.substring(4, 6), 16);
 const a = rawColor.length === 8 ? parseInt(rawColor.substring(6, 8), 16) : 255;
 
-  const timestamp = offlineTimestamp || 'Not set';
+const timestamp = offlineTimestamp || 'Not set';
 
+  
+  // Déclaration des variables de rendu conditionnel
+  const legendRenderer = 'TigerTag Pro (Online)';
+  const uidRenderer = `<p class="result-line"><strong>Tag ID:</strong> ${uidNumeric}</p>`;
+  const mainImgRenderer = `apiData.images.main_src.main_src`? `${apiData.images.main_src}` : '';
+  const titleRenderer = apiData.title ? `${apiData.title}` : '';
+  const nameRenderer = apiData.name ? `${apiData.name}` : '';
+  const brandRenderer = apiData.brand ? `${apiData.brand}` : '';
+  const seriesRenderer = apiData.series ? `${apiData.series}` : '';
+  const materialRenderer = apiData.filament.material ? `${apiData.filament.material}` : '';
+  const aspect1Renderer = apiData.filament.aspect1 ? `${apiData.filament.aspect1}` : '';
+  const aspect2Renderer = apiData.filament.aspect2 ? `/ ${apiData.filament.aspect2}` : '';
+  const shoreRenderer = apiData.filament.shore ? `Shore: ${apiData.filament.shore}` : '';
+  const diameterRenderer = apiData.filament.diameter ? `${apiData.filament.diameter} mm` : '';
+  const weightRenderer = apiData.filament.weight ? `${apiData.filament.weight} ${apiData.filament.weight_unit}` : '';
+  const recycledRenderer = apiData.filament.recycled ? `Recycled : ✅`: ``;
+  const refillRenderer = apiData.filament.refill ? `Refill : ✅` : ``;
+  const filledRenderer = apiData.filament.filled ? `Filled : ✅` : ``;
+  const colorTypeRenderer = apiData.filament.color_info?.type ? `Color Type: ${apiData.filament.color_info.type}` : '';
+  const transdistRenderer = apiData.filament.transmission_dist ? `Transmission Dist: ${apiData.filament.transmission_dist}` : '<p class="result-line"><strong>Transmission Dist:</strong> --</p>';
+  const colorListRenderer = apiData.filament.color_info?.colors ? `List:${apiData.filament.color_info.colors.join(', ')}` : '';
+  const colorHslaRenderer = apiData.filament.color_info?.hsla ? `HSLA:${apiData.filament.color_info.hsla}` : '';
+  const colorRalRenderer = apiData.filament.color_info?.ral ? `RAL:${apiData.filament.color_info.ral}` : '';
+  const drytempRenderer = apiData.dryer.temp ? `${apiData.dryer.temp} °C` : '';
+  const drytimeRenderer = apiData.dryer.time ? `${apiData.dryer.time} H` : '';
+  const nozzleMinRenderer = apiData.nozzle.temp_min ? `${apiData.nozzle.temp_min} °C` : '';
+  const nozzleMaxRenderer = apiData.nozzle.temp_max ? `${apiData.nozzle.temp_max} °C` : '';
+  const bedMinRenderer = apiData.bed.temp_min ? `${apiData.bed.temp_min} °C` : '';
+  const bedMaxRenderer = apiData.bed.temp_max ? `${apiData.bed.temp_max} °C` : '';
+  const fanMinRenderer = apiData.fan.speed_min ? `${apiData.fan.speed_min} %` : '';
+  const fanMaxRenderer = apiData.fan.speed_max ? `${apiData.fan.speed_max} %` : '';
+  const skuRenderer = apiData.sku ? `${apiData.sku}` : '';
+  const barcodeRenderer = apiData.barcode ? `${apiData.barcode}` : '';
+  const bambuRenderer = apiData.metadata?.bambuLabel && apiData.metadata?.bambuID ? `BambuLab: ${apiData.metadata.bambuLabel}` : '';
+  const crealityRenderer = apiData.metadata?.crealityLabel && apiData.metadata?.crealityID ? `Creality: ${apiData.metadata.crealityLabel}`: '';
+  const dataLinkTDS = apiData.links.tds ? `<li><a href="${apiData.links.tds}" target="_blank">TDS</a></li>` : '';
+  const dataLinkMSDS = apiData.links.msds ? `<li><a href="${apiData.links.msds}" target="_blank">MSDS</a></li>` : '';
+  const dataLinkRoHS = apiData.links.rohs ? `<li><a href="${apiData.links.rohs}" target="_blank">RoHS</a></li>` : '';
+  const dataLinkREACH = apiData.links.reach ? `<li><a href="${apiData.links.reach}" target="_blank">REACH</a></li>` : '';
+  const dataLinkTips = apiData.links.tips ? `<li><a href="${apiData.links.tips}" target="_blank">Tips</a></li>` : '';
+  const dataLinkYouTube = apiData.links.youtube ? `<li><a href="${apiData.links.youtube}" target="_blank">YouTube</a></li>` : '';
+
+  
   return `
-      <legend>TigerTag Pro (Online)</legend>
-      <p class="result-line"><strong>Tag ID:</strong> ${uidNumeric}</p>
-      <p><img src="${apiData.images.main_src}" alt="Product image" class="result-image" /></p>
-      <p class="result-line"><strong>Title:</strong> ${apiData.title}</p>
-      <p class="result-line"><strong>Name:</strong> ${apiData.name}</p>
-      <p class="result-line"><strong>Brand:</strong> ${apiData.brand}</p>
-      <p class="result-line"><strong>Series:</strong> ${apiData.series}</p>
-      <p class="result-line"><strong>Material:</strong> ${apiData.filament.material}</p>
-      <p class="result-line"><strong>Aspect 1:</strong> ${apiData.filament.aspect1}</p>
-      <p class="result-line"><strong>Aspect 2:</strong> ${apiData.filament.aspect2}</p>
-      <p class="result-line"><strong>Shore:</strong> ${apiData.filament.shore}</p>
-      <p class="result-line"><strong>Diameter:</strong> ${apiData.filament.diameter} mm</p>
-      <p class="result-line"><strong>Weight:</strong> ${apiData.filament.weight} ${apiData.filament.weight_unit}</p>
-      <p class="result-line"><strong>Recycled:</strong> ${apiData.filament.recycled ? '✅' : 'No'}</p>
-      <p class="result-line"><strong>Refill:</strong> ${apiData.filament.refill ? '✅' : 'No'}</p>
-      <p class="result-line"><strong>Filled:</strong> ${apiData.filament.filled ? '✅' : 'No'}</p>
-      <p class="result-line">
-        <strong>Color:</strong>
-        <input type="color" class="custom-color" value="${colorHex}" disabled />
-        ${colorHex} : RGBA(${r}, ${g}, ${b}, ${a})<br/>
-      </p>
-      <p class="result-line"><strong>Color Type:</strong> ${apiData.filament.color_info?.type || 'N/A'}</p>
-      <p class="result-line"><strong>Transmission Dist:</strong> ${apiData.filament.transmission_dist}</p>
-      <p class="result-line"><strong>Color List:</strong> ${(apiData.filament.color_info?.colors || []).filter(Boolean).join(', ')}</p>
-      <p class="result-line"><strong>Drying:</strong> ${apiData.dryer.temp} °C for ${apiData.dryer.time} hours</p>
-      <p class="result-line"><strong>Nozzle min:</strong> ${apiData.nozzle.temp_min} °C /<strong>Nozzle max:</strong> ${apiData.nozzle.temp_max} °C</p>
-      <p class="result-line"><strong>Temp min:</strong> ${apiData.bed.temp_min} °C /<strong>Temp max:</strong> ${apiData.bed.temp_max} °C</p>
-      <p class="result-line"><strong>Fan min:</strong> ${apiData.fan.speed_min} % /<strong>Fan max:</strong> ${apiData.fan.speed_max} %</p>
-      <p class="result-line"><strong>SKU:</strong> ${apiData.sku}</p>
-      <p class="result-line"><strong>Barcode:</strong> ${apiData.barcode}</p>
-      <p class="result-line"><strong>Bambu ID:</strong> ${apiData.metadata.bambuLabel} (${apiData.metadata.bambuID})</p>
-      <p class="result-line"><strong>Creality ID:</strong> ${apiData.metadata.crealityLabel} (${apiData.metadata.crealityID})</p>
-      <p><strong>TimeStamp:</strong> ${timestamp}</p>
-      <p class="result-line"><strong>Documents:</strong>
-        <ul>
-          <li><a href="${apiData.links.tds}" target="_blank">TDS</a></li>
-          <li><a href="${apiData.links.msds}" target="_blank">MSDS</a></li>
-          <li><a href="${apiData.links.rohs}" target="_blank">RoHS</a></li>
-          <li><a href="${apiData.links.reach}" target="_blank">REACH</a></li>
-          <li><a href="${apiData.links.tips}" target="_blank">Tips</a></li>
-          <li><a href="${apiData.links.youtube}" target="_blank">YouTube</a></li>
-        </ul>
-      </p>
+  <div class="filament-card">
+    <div class="filament-card__header">
+      <legend class="filament-card__title">${legendRenderer}</legend>
+    </div>
+
+    <h3 class="filament-card__name">${brandRenderer} - ${seriesRenderer} - ${nameRenderer}</h3>
+    <div class="filament-card__body">
+      <div class="filament-card__image">
+      <img src="${mainImgRenderer}" alt="Product image" class="result-image" />
+    </div>
+      <div class="filament-card__info">
+        <div class="filament-card__row">
+          <div class="filament-card__field">
+            <span class="label">Material:</span>
+            <span class="value">${materialRenderer}</span>
+          </div>
+          <div class="filament-card__field">
+            <span class="label">Aspect:</span>
+            <span class="value">${aspect1Renderer} ${aspect2Renderer}</span>
+          </div>
+        </div>
+
+        <div class="filament-card__row">
+          <div class="filament-card__field">
+            <span class="value">${shoreRenderer}</span>
+          </div>
+          <div class="filament-card__field">
+            <span class="label">Diameter:</span>
+            <span class="value">${diameterRenderer}</span>
+          </div>
+          <div class="filament-card__field">
+            <span class="label">Weight:</span>
+            <span class="value">${weightRenderer}</span>
+          </div>
+        </div>
+
+        <div class="filament-card__flags">
+          ${refillRenderer}
+          ${recycledRenderer}
+          ${filledRenderer}
+        </div>
+
+        <div class="filament-card__field">
+          <div class="filament-card__color-swatch" style="background:${colorHex}"></div>
+          <div class="value">Hex: ${colorHex}</div>
+          <div class="value">RGBA: ${r}, ${g}, ${b}, ${a}</div>
+        </div>
+
+        <div class="filament-card__row">
+          <div class="filament-card__field">
+            <span class="label">Nozzle:</span>
+            <span class="value">${nozzleMinRenderer} / ${nozzleMaxRenderer}</span>
+          </div>
+          <div class="filament-card__field">
+            <span class="label">Bed:</span>
+            <span class="value">${bedMinRenderer} / ${bedMaxRenderer}</span>
+          </div>
+          <div class="filament-card__field">
+            <span class="label">Fan:</span>
+            <span class="value">${fanMinRenderer} / ${fanMaxRenderer}</span>
+          </div>
+        </div>
+
+        <div class="filament-card__row">
+          <div class="filament-card__field">
+            <span class="label">Drying:</span>
+            <span class="value">${drytempRenderer} / ${drytimeRenderer}</span>
+          </div>
+        </div>
+
+        <div class="filament-card__row">
+          <div class="filament-card__field">
+            <span class="label">SKU:</span>
+            <span class="value">${skuRenderer}</span>
+          </div>
+          <div class="filament-card__field">
+            <span class="label">Barcode:</span>
+            <span class="value">${barcodeRenderer}</span>
+          </div>
+        </div>
+
+        <div class="filament-card__row">
+          <div class="filament-card__field">
+            <span class="value">${bambuRenderer}</span>
+          </div>
+          <div class="filament-card__field">
+            <span class="value">${crealityRenderer}</span>
+          </div>
+        </div>
+
+        <div class="filament-card__row">
+          <div class="filament-card__field">
+            <span class="value">${colorTypeRenderer}</span>
+          </div>
+          <div class="filament-card__field">
+            <span class="value">${colorListRenderer}</span>
+          </div>
+        </div>
+
+        <div class="filament-card__row">
+          ${dataLinkTDS}
+          ${dataLinkMSDS}
+          ${dataLinkRoHS}
+          ${dataLinkREACH}
+          ${dataLinkTips}
+          ${dataLinkYouTube}
+        </div>
+        <div class="filament-card__field">
+      <span class="value">TimeStamp: ${timestamp}</span>
+      <span class="value">UID: ${uidNumeric}</span>
+      </div>
+      </div> <!-- .filament-card__info -->
+    </div>   <!-- .filament-card__body -->
+  </div>
+      
   `;
 }
 

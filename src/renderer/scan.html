@@ -10,8 +10,9 @@
   <div id="scanContainer">
     <!--  <h1>Scan TigerTag</h1> -->
     <button id="scanActionBtn">🎯 Scan TigerTag</button>
-    <legend>Result Scan</legend>
+    
     <div id="scanResult">
+      <legend>Result Scan</legend>
       <!-- Les informations scannées s'afficheront ici -->
     </div>
   </div>
@@ -19,3 +20,191 @@
   <script src="scan.js"></script>
 </body>
 </html>
+
+<style>
+
+
+
+#scanResult {
+  position: relative;             /* nécessaire pour que ::before soit positionné par rapport à lui */
+  background-color: #2e2e2e;
+  padding: 1.5rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-clip: padding-box;
+
+}
+
+
+/* Légende “flottante” */
+#scanResult legend {
+  position: absolute;
+  top: -0.75rem;
+  left: 0.5rem;
+  padding: 0 0.5rem;
+  background-color: transparent;          
+  z-index: 1;
+}
+
+
+
+
+#scanContainer {
+  padding: 24px;
+  max-width: 510px;
+  margin: 0 auto;
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+#result-lines {
+  padding: 24px;
+  max-width: 500px;
+  margin: 5px;
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+#scanContainer fieldset,
+#result-lines fieldset {
+  border: 1px solid #444;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+}
+
+#scanContainer legend,
+#result-lines legend {
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 0 0.5rem;
+  color: #ddd;
+} 
+
+#scanActionBtn {
+  background-color: #80000d;
+  padding: 15px 25px 15px 25px;
+  border: none;
+  border-radius: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 100%;
+  font-size: 15px;
+  transition: 
+      background-color 0.3s ease,   /* transition sur la couleur */
+      transform        0.2s ease;    /* petite mise à l’échelle */
+}
+
+/* style au hover */
+#scanActionBtn:hover {
+  background-color: #006c1b;
+  
+}
+#scanActionBtn:active {
+  background-color: #006c1b;
+  transform: translate(0, 2px);
+  transform: scale(1.05);
+}
+#scanResult {
+  margin-top: 1rem;
+  line-height: 1.5rem;
+}
+
+.filament-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;        /* ou taille fixe souhaitée */
+  max-width: 600px;
+  background: transparent;
+}
+
+.filament-card__header {
+  padding: 0.5rem 1rem;
+  background: transparent;
+}
+
+.filament-card__title {
+  font-size: 16px;
+  color: #fefefe;
+}
+
+.filament-card__body {
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.filament-card__image img {
+  width: 120px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.filament-card__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.filament-card__name {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fefefe;
+}
+
+.filament-card__row {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.filament-card__field {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.filament-card__field .label {
+  font-weight: bold;
+  color: #fefefe;
+}
+
+.filament-card__field .value {
+  color: #fefefe;
+}
+
+.filament-card__flags {
+  display: flex;
+  gap: 1rem;
+  color: #fefefe;
+}
+
+.flag {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+
+.filament-card__color-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #444;
+  margin-top: 0.5rem;
+}
+
+.filament-card__footer {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  background: #1f1f1f;
+}
+
+</style>

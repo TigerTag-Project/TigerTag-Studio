@@ -51,7 +51,7 @@
 
 #scanContainer {
   padding: 24px;
-  max-width: 510px;
+  width: 510px;
   margin: 0 auto;
   background-color: #1f1f1f;
   border-radius: 12px;
@@ -206,5 +206,264 @@
   text-align: center;
   background: #1f1f1f;
 }
+
+
+/* style css test */
+/* Conteneur principal */
+    .testcss-card {
+      width: 100%;
+      min-width: 450px;
+      
+      display: flex;
+      flex-direction: column;
+      
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+    /* Header */
+    .testcss-card-header {
+      background: transparent;
+      text-align: center;
+      font-size: 25px;
+      font-weight: bold;
+      padding-bottom: 15px;
+      
+    }
+    /* Body (image + infos) */
+    .testcss-card-body {
+      display: flex;
+      gap: 0.25rem;
+      padding: 0px;
+    }
+    /* Image */
+    .testcss-image {
+      flex: 0 0 190px;
+      margin-right: 20px;
+      overflow: hidden;
+    }
+    .testcss-image .label {
+      display: flex;              /* transforme le span en conteneur flex */
+      justify-content: center;    /* centre le contenu horizontalement */
+      align-items: center;        /* centre verticalement (si tu fixes une hauteur) */
+      height: 1.2em;              /* ou la hauteur nécessaire pour ton design */
+      font-size: 0.9rem;
+      font-weight: bold;
+      padding-bottom: 0;          /* supprime ton padding qui déplace tout vers le haut/bas */
+    }
+    .testcss-image img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    /* Infos colonne */
+    .testcss-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .testcss-name {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+    /* Ligne générique */
+    .testcss-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    .testcss-row .label {
+      font-weight: bold;
+    }
+    /* Flags */
+    .testcss-flags {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.9rem;
+      justify-content: center;    /* centre le contenu horizontalement */
+    }
+
+    .testcss-color {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;            /* espace entre swatch et valeurs */
+    }
+    .testcss-color .swatch {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      margin-right: 5px;
+    }
+
+    .testcss-color-values {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;            /* petit écart entre Hex et RGBA */
+    }
+
+    /* Footer */
+    .testcss-card-footer {
+      background: #333;
+      text-align: center;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+    }
+    .testcss-card-footer button {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    /* Container des 4 mini‑cards sous “Additional Information” */
+/* Container des 4 subcards */
+.filament-card__additional {
+  display: flex;
+  flex-wrap: wrap;      /* permet le retour à la ligne */
+  gap: 1rem;
+  background: #2e2e2e;
+  justify-content: center; /* optionnel : centrer les lignes */
+}
+
+.subcard {
+  /* on peut proposer une largeur de base et autoriser l’extension */
+  flex: 1 1 47%;      /* flex-grow:1; flex-shrink:1; base 200px */
+  max-width: 500px;     /* optionnel : pas plus large que ça */
+  background: #1f1f1f;
+  border: 1px solid #444;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* En‑tête : titre + icône */
+.subcard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: #2a2a2a;
+}
+.subcard__title {
+  margin: 0;
+  font-size: 1rem;
+  color: #ddd;
+}
+.subcard__icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: invert(1);
+}
+
+/* Corps : deux lignes Min/Max */
+.subcard__body {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;             /* espace entre les deux colonnes */
+  padding: 0 0.75rem;
+}
+
+/* Chaque colonne (Min ou Max) */
+.subcard__col {
+  display: flex;
+  flex-direction: column; /* empile Label puis Value */
+  align-items: center;    /* centre horizontalement */
+  /* facultatif : text-align pour les spans */
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.subcard__row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.subcard__label {
+  font-size: 0.85rem;
+  color: #bbb;
+  font-weight: bold;
+  margin-bottom: 0.25rem; /* petit espace sous le label */
+}
+.subcard__value {
+  font-size: 1.2rem;
+  color: #fff;
+  line-height: 1;
+}
+
+/* Container colonnes full-width */
+.filament-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #2e2e2e;
+  width: 100%;  
+  padding-bottom: 0.5rem;
+}
+
+/* Carte standard (2 colonnes) */
+.detail-card {
+  display: flex;
+  justify-content: space-between;
+  background: #1f1f1f;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 0.75rem;
+  gap: 1rem;
+}
+
+/* Chaque colonne dans la carte */
+.detail-card__col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Label / Value */
+.detail-card__label {
+  font-size: 0.85rem;
+  color: #bbb;
+  font-weight: bold;
+}
+.detail-card__value {
+  font-size: 1.1rem;
+  color: #fff;
+  line-height: 1.2;
+}
+
+/* Carte Documents : full-width + flex column */
+.detail-card--docs {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.detail-card--docs .document-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+}
+.detail-card--docs .document-list li {
+  background: #2a2a2a;
+  border-radius: 4px;
+  padding: 0.3rem 0.5rem;
+}
+.detail-card--docs .document-list a {
+  color: #0af;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+    /* fin test css */
+    
 
 </style>

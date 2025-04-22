@@ -55,7 +55,7 @@ async function renderOfflineData(tagData) {
   const a = (tagData.color & 0xFF);
 
   return `
-<legend>TigerTag Maker (Offline)</legend>
+<legend>${tagData.versionLabel || '🚨 Fake TigerTag'} (Offline)</legend>
 <div class="testcss-card">
 <div class="testcss-card-header">
       <span class="testcss-card-name">${tagData.brandLabel || 'N/A'} - ${tagData.materialLabel || 'N/A'}<span>
@@ -102,34 +102,96 @@ async function renderOfflineData(tagData) {
     <div class="testcss-card-footer">
       <button>▼ Additional Information ▼</button>
     </div>
+
+    <!-- HTML à insérer sous votre bouton “Additional Information” -->
+<div class="filament-card__additional">
+
+  <!-- Subcard Nozzle --> 
+  <div class="subcard">
+    <div class="subcard__header">
+      <h4 class="subcard__title">Nozzle Temp.</h4>
+      <img src="../assets/svg/thermometer.svg" alt="Nozzle icon" class="subcard__icon">
+    </div>
+    <div class="subcard__body">
+      <div class="subcard__col">
+        <span class="subcard__label">Min</span>
+        <span class="subcard__value">${tagData.tempMin} °C</span>
+      </div>
+      <div class="subcard__col">
+        <span class="subcard__label">Max</span>
+        <span class="subcard__value">${tagData.tempMax} °C</span>
+      </div>
+    </div>
+  </div>
+
+      <!-- Subcard Drying -->
+  <div class="subcard">
+    <div class="subcard__header">
+      <h4 class="subcard__title">Drying</h4>
+      <img src="../assets/svg/droplets.svg" alt="Drying icon" class="subcard__icon">
+    </div>
+    <div class="subcard__body">
+      <div class="subcard__col">
+        <span class="subcard__label">Temp</span>
+        <span class="subcard__value">${tagData.dryTemp} °C</span>
+      </div>
+      <div class="subcard__col">
+        <span class="subcard__label">Time</span>
+        <span class="subcard__value">${tagData.dryTime} h</span>
+      </div>
+    </div>
+  </div>
+  </div>
+    <!-- Timestamp & UID doit être ICI, DANS filament-card__details -->
+    <div class="detail-card">
+      <div class="detail-card__col">
+        <span class="detail-card__label">Timestamp:</span>
+        <span class="detail-card__value">
+          ${tagData.timeStampReadable ?? 'Not set'}
+        </span>
+      </div>
+      <div class="detail-card__col">
+        <span class="detail-card__label">UID:</span>
+        <span class="detail-card__value">
+          ${tagData.uidNumeric}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header + Body + Footer comme avant… -->
+
+  <!-- Dev‑Mode : s’ouvre/croche au clic -->
+  <details class="dev-mode">
+    <summary>🛠️ Data Mode (développeur)</summary>
+    <div class="dev-mode__content">
+      <!-- Tout votre code brut offline à l’intérieur -->
+      <p>${tagData.versionLabel || '🚨 Fake TigerTag'} (ID : ${tagData.tigerTagID})</p>
+      <p><strong>Tag ID:</strong> ${tagData.uidNumeric}</p>
+      <p><strong>Version:</strong> ${tagData.versionLabel || 'N/A'} (ID : ${tagData.tigerTagID})</p>
+      <p><strong>ProductID:</strong> ${tagData.productIdDecimal ?? 'N/A'} (${tagData.productID.join(' ')})</p>
+      <p><strong>Material:</strong> ${tagData.materialLabel || 'N/A'} (ID : ${tagData.materialID})</p>
+      <p><strong>Aspect 1:</strong> ${tagData.aspect1Label || 'N/A'} (ID : ${tagData.aspect1ID})</p>
+      <p><strong>Aspect 2:</strong> ${tagData.aspect2Label || 'N/A'} (ID : ${tagData.aspect2ID})</p>
+      <p><strong>Type:</strong> ${tagData.typeLabel || 'N/A'} (ID : ${tagData.typeID})</p>
+      <p><strong>Diameter:</strong> ${tagData.diameterLabel || 'N/A'} (ID : ${tagData.diameterID})</p>
+      <p><strong>Brand:</strong> ${tagData.brandLabel || 'N/A'} (ID : ${tagData.brandID})</p>
+      <p>
+        <strong>Color:</strong>
+        <input type="color" class="swatch" value="${colorHex}" disabled />Hex(${colorHex}) / RGBA(${r},${g},${b},${a})
+      </p>
+      <p><strong>Weight:</strong> ${tagData.weightValue !== undefined ? tagData.weightValue : 'N/A'}</p>
+      <p><strong>Unit:</strong> ${tagData.unitLabel || 'N/A'} (ID : ${tagData.unitId})</p>
+      <p><strong>Temp Min:</strong> ${tagData.tempMin} °C</p>
+      <p><strong>Temp Max:</strong> ${tagData.tempMax} °C</p>
+      <p><strong>Dry Temp:</strong> ${tagData.dryTemp} °C</p>
+      <p><strong>Dry Time:</strong> ${tagData.dryTime} h</p>
+      <p><strong>TimeStamp:</strong> ${tagData.timeStampReadable ?? 'Not set'}</p>
+    </div>
+  </details>
+
 </div>
-<!-- fin test css-card -->
 
-
-
-
-  <h3>TigerTag Maker (Offline)</h3>
-  <p><strong>Tag ID:</strong> ${tagData.uidNumeric}</p>
-  <p><strong>Version:</strong> ${tagData.versionLabel || 'N/A'} (ID : ${tagData.tigerTagID})</p>
-  <p><strong>ProductID:</strong> ${tagData.productIdDecimal ?? 'N/A'} (${tagData.productID.join(' ')})</p>
-  <p><strong>Material:</strong> ${tagData.materialLabel || 'N/A'} (ID : ${tagData.materialID})</p>
-  <p><strong>Aspect 1:</strong> ${tagData.aspect1Label || 'N/A'} (ID : ${tagData.aspect1ID})</p>
-  <p><strong>Aspect 2:</strong> ${tagData.aspect2Label || 'N/A'} (ID : ${tagData.aspect2ID})</p>
-  <p><strong>Type:</strong> ${tagData.typeLabel || 'N/A'} (ID : ${tagData.typeID})</p>
-  <p><strong>Diameter:</strong> ${tagData.diameterLabel || 'N/A'} (ID : ${tagData.diameterID})</p>
-  <p><strong>Brand:</strong> ${tagData.brandLabel || 'N/A'} (ID : ${tagData.brandID})</p>
-  <p>
-    <strong>Color:</strong>
-    <input type="color" class="custom-color" value="${colorHex}" disabled />
-    ${colorHex} : RGBA(${r},${g},${b},${a})
-  </p>
-  <p><strong>Weight:</strong> ${tagData.weightValue !== undefined ? tagData.weightValue : 'N/A'}</p>
-  <p><strong>Unit:</strong> ${tagData.unitLabel || 'N/A'} (ID : ${tagData.unitId})</p>
-  <p><strong>Temp Min:</strong> ${tagData.tempMin} °C</p>
-  <p><strong>Temp Max:</strong> ${tagData.tempMax} °C</p>
-  <p><strong>Dry Temp:</strong> ${tagData.dryTemp} °C</p>
-  <p><strong>Dry Time:</strong> ${tagData.dryTime} h</p>
-  <p><strong>TimeStamp:</strong> ${tagData.timeStampReadable ?? 'Not set'}</p>
   `;
 }
 

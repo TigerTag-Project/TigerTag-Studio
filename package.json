@@ -1,5 +1,5 @@
 {
-  "name": "Tigertag-Studio",
+  "name": "Tigertag-Studio-Beta",
   "version": "1.0.0",
   "description": "A modular Node.js project for TigerTag Maker and Pro protocols with stubs for future protocols.",
   "main": "src/main.js",

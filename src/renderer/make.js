@@ -154,7 +154,7 @@ document.getElementById('mainContentForm').style.display = 'block';
         // Vérifier que le champ "materialId" a une valeur (non null)
         const materialIdValue = document.getElementById('materialId').value;
         if (!materialIdValue) {
-          alert("Please select a material before writing the tag.");
+          alert("🚨 Please select a Material Type 🚨");
           return; // On empêche l'envoi du formulaire
         }
 
@@ -224,6 +224,8 @@ document.getElementById('mainContentForm').style.display = 'block';
           ? 'Tag reset to all zeros!'
           : `Reset Error: ${result.error}`;
           alert("TigerTag Reset.");
+
+          
           
     });
 

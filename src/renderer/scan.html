@@ -327,7 +327,7 @@
 .filament-card__additional {
   display: flex;
   flex-wrap: wrap;      /* permet le retour à la ligne */
-  gap: 1rem;
+  gap: 1rem; /* espace entre les subcards */
   background: #2e2e2e;
   justify-content: center; /* optionnel : centrer les lignes */
 }
@@ -419,12 +419,18 @@
   border-radius: 6px;
   padding: 0.75rem;
   gap: 1rem;
+  margin-top: 15px;
 }
 
 /* Chaque colonne dans la carte */
 .detail-card__col {
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
+}
+.detail-card__row {
+  display: flex;
+  flex-direction: row;
   gap: 0.25rem;
 }
 
@@ -463,6 +469,49 @@
   text-decoration: none;
   font-size: 0.85rem;
 }
+
+/* Masque le triangle par défaut, on personnalise */
+
+
+.dev-mode summary {
+  margin-top: 15px;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  background: #222;
+  color: #fff;
+  font-weight: bold;
+  border: 1px solid #444;
+  border-radius: 4px;
+  list-style: none;       /* enlève le marker */
+}
+
+/* On retire le triangle natif et on ajoute un icône personnalisé */
+.dev-mode summary::-webkit-details-marker {
+  display: none;
+}
+.dev-mode summary::before {
+  content: '▶';
+  display: inline-block;
+  width: 1em;
+  transition: transform 0.2s ease;
+}
+.dev-mode[open] summary::before {
+  transform: rotate(90deg);
+}
+
+/* Contenu caché par défaut, s’affiche quand <details> est open */
+.dev-mode__content {
+  padding: 1rem;
+  background: #1f1f1f;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #ddd;
+  line-height: 1rem;
+  display: block;       /* pour forcer chaque span sur sa propre ligne */
+  line-height: 0.5rem;
+}
+
     /* fin test css */
     
 
